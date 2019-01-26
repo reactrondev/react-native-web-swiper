@@ -231,7 +231,7 @@ Swiper.propTypes = {
 Swiper.defaultProps = {
     direction: "row",
     index: 0,
-    actionMinWidth: 0.5,
+    actionMinWidth: 0.35,
     prevButtonText: "prev",
     nextButtonText: "next",
 };
