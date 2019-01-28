@@ -115,5 +115,7 @@ You can override any style
 | swipeWrapperStyle | `style` |
 | controlsWrapperStyle | `style` |
 | dotsWrapperStyle | `style` |
+| dotElement | `element` |
 | dotStyle | `style` |
+| activeDotElement | `element` |
 | activeDotStyle | `style` |
