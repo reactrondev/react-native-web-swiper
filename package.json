@@ -1,8 +1,20 @@
 {
   "name": "react-native-web-swiper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://oxyii.github.io/react-native-web-swiper",
   "main": "dist/index.js",
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "react-native-web",
+    "swipe",
+    "swiper",
+    "slider"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oxyii/react-native-web-swiper.git"
+  },
   "scripts": {
     "build": "babel src --out-dir dist",
     "prepublish": "npm run build"
