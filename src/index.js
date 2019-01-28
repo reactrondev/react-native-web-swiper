@@ -111,7 +111,7 @@ export default class Swiper extends React.Component {
     _changeIndex(decrement=false) {
         let move = {x:0,y:0};
         if((this.state.activeIndex<=0 && decrement) || (!decrement && this.state.activeIndex+1>=this.count))
-            return Animated.spring(this.state.pan,{toValue:{x:0,y:0}}).start();
+            return Animated.spring(this.state.pan,{toValue:move}).start();
         let index = !decrement ? this.state.activeIndex+1 : this.state.activeIndex-1;
         this.setState({activeIndex: index});
         if(this.props.direction==="row")
@@ -119,6 +119,7 @@ export default class Swiper extends React.Component {
         else
             move.y = decrement ? this.state.height : this.state.height*-1;
         Animated.spring(this.state.pan,{toValue:move}).start();
+        if(!!this.props.onIndexChanged) this.props.onIndexChanged(index);
     }
 
     _onLayout(event) {
@@ -194,6 +195,7 @@ export default class Swiper extends React.Component {
 Swiper.propTypes = {
     direction: PropTypes.oneOf(["row","column"]),
     index: PropTypes.number,
+    onIndexChanged: PropTypes.func,
     actionMinWidth: PropTypes.number,
     children: PropTypes.node.isRequired,
     containerStyle: PropTypes.oneOfType([
