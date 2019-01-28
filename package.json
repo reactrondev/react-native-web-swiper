@@ -1,6 +1,6 @@
 {
   "name": "react-native-web-swiper",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "https://github.com/oxyii/react-native-web-swiper#readme",
   "main": "dist/index.js",
   "license": "MIT",
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "babel src --out-dir dist",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@babel/runtime": "^7.3.1",
