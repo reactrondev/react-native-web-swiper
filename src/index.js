@@ -77,7 +77,7 @@ export default class Swiper extends React.Component {
 
         this._panResponder = PanResponder.create({
             onMoveShouldSetResponderCapture: () => true,
-            onMoveShouldSetPanResponderCapture: () => true,
+            onMoveShouldSetPanResponderCapture: (e, gestureState) => Math.abs(this.props.direction === "row" ? gestureState.dx : gestureState.dy) > 5,
             onPanResponderGrant: (e, gestureState) => this._fixState(),
             onPanResponderMove: Animated.event([
                 null, this.props.direction === "row" ? {dx: this.state.pan.x} : {dy: this.state.pan.y},
