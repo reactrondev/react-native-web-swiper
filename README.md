@@ -105,17 +105,17 @@ You can override any style
 | Prop  | Type |
 | :------------ | :---------------:|
 | prevButtonElement | `element` |
-| prevButtonStyle | `style` |
+| prevButtonStyle | `Text.propTypes.style` |
 | prevButtonText | `string` |
 | nextButtonElement | `element` |
-| nextButtonStyle | `style` |
+| nextButtonStyle | `Text.propTypes.style` |
 | nextButtonText | `string` |
-| containerStyle | `style` |
-| swipeAreaStyle | `style` |
-| swipeWrapperStyle | `style` |
-| controlsWrapperStyle | `style` |
-| dotsWrapperStyle | `style` |
+| containerStyle | `ViewPropTypes.style` |
+| swipeAreaStyle | `ViewPropTypes.style` |
+| swipeWrapperStyle | `ViewPropTypes.style` |
+| controlsWrapperStyle | `ViewPropTypes.style` |
+| dotsWrapperStyle | `ViewPropTypes.style` |
+| dotStyle | `ViewPropTypes.style` |
+| activeDotStyle | `ViewPropTypes.style` |
 | dotElement | `element` |
-| dotStyle | `style` |
 | activeDotElement | `element` |
-| activeDotStyle | `style` |
