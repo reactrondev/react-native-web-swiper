@@ -62,20 +62,18 @@ const styles = StyleSheet.create({
 });
 
 export default class Swiper extends React.Component {
-    state = {
-        width: 0,
-        height: 0,
-        activeIndex: 0,
-        pan: new Animated.ValueXY(),
-    };
+    constructor(props) {
+        super(props);
 
-    componentWillMount() {
+        this.state = {
+            width: 0,
+            height: 0,
+            activeIndex: props.index,
+            pan: new Animated.ValueXY(),
+        };
+
         this._animatedValueX = 0;
         this._animatedValueY = 0;
-        this.state.pan.x.addListener((value) => this._animatedValueX = value.value);
-        this.state.pan.y.addListener((value) => this._animatedValueY = value.value);
-
-        this.setState({activeIndex: this.props.index});
 
         this._panResponder = PanResponder.create({
             onMoveShouldSetResponderCapture: () => true,
@@ -91,6 +89,11 @@ export default class Swiper extends React.Component {
                 this._changeIndex(correction>0);
             }
         });
+    }
+
+    componentDidMount() {
+        this.state.pan.x.addListener((value) => this._animatedValueX = value.value);
+        this.state.pan.y.addListener((value) => this._animatedValueY = value.value);
     }
 
     componentWillUnmount() {
@@ -220,7 +223,7 @@ Swiper.propTypes = {
 Swiper.defaultProps = {
     direction: "row",
     index: 0,
-    actionMinWidth: 0.35,
+    actionMinWidth: 0.25,
     prevButtonText: "prev",
     nextButtonText: "next",
 };

@@ -75,7 +75,7 @@ No. Just per-screen slider / swiper
 | direction | `"row"` | `enum("row","column")` | Horizontal ("row") or vertical ("column") mode |
 | index | `0` | `number` | Index number of initial slide |
 | onIndexChanged | `(newIndex) => null` | `func` | Called when active slide changed |
-| actionMinWidth | `0.35` | `number` | Minimal part of screen that must be swiped for index change. Default value 0.35 means 35% of slide width (or height if direction="column") |
+| actionMinWidth | `0.25` | `number` | Minimal part of screen that must be swiped for index change. Default value 0.25 means 25% of slide width (or height if direction="column") |
 
 #### Custom style
 
