@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         overflow: "hidden",
         position: "relative",
+        flex: 1,
     },
     controlsWrapperStyle: {
         position: "absolute",
@@ -156,7 +157,7 @@ export default class Swiper extends React.Component {
         this.count = children.length;
         return (
             <View style={[styles.container,containerStyle]} onLayout={this._onLayout.bind(this)}>
-                <View style={[styles.sliderContainer,swipeAreaStyle,{width,height}]}>
+                <View style={[styles.sliderContainer,swipeAreaStyle]}>
                     <Animated.View
                         style={[{
                             position: "relative",
