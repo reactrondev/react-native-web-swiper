@@ -76,6 +76,7 @@ No. Just per-screen slider / swiper
 | index | `0` | `number` | Index number of initial slide |
 | onIndexChanged | `(newIndex) => null` | `func` | Called when active slide changed |
 | actionMinWidth | `0.25` | `number` | Minimal part of screen that must be swiped for index change. Default value 0.25 means 25% of slide width (or height if direction="column") |
+| overRangeButtonsOpacity | `0` | `number` | "Prev" button on first slide and "Next" button on last slide are invisible by default. You can set `opacity` style for these buttons (#1) |
 
 #### Custom style
 

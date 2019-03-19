@@ -151,6 +151,7 @@ export default class Swiper extends React.Component {
             nextButtonElement,
             nextButtonStyle,
             nextButtonText,
+            overRangeButtonsOpacity,
         } = this.props;
         let {children} = this.props;
         if(!Array.isArray(children)) children = [children];
@@ -175,7 +176,7 @@ export default class Swiper extends React.Component {
                     <View style={[styles.controlsWrapperStyle,{
                         flexDirection: direction,
                     }, direction==="row" ? {left: 0} : {top: 0}, controlsWrapperStyle]}>
-                        <TouchableOpacity disabled={!activeIndex} style={{opacity:!activeIndex ? 0 : 1}} onPress={()=>this.moveUpDown(true)}>
+                        <TouchableOpacity disabled={!activeIndex} style={{opacity:!activeIndex ? overRangeButtonsOpacity : 1}} onPress={()=>this.moveUpDown(true)}>
                             {prevButtonElement || <Text style={[styles.prevButtonStyle,prevButtonStyle]}>{prevButtonText}</Text>}
                         </TouchableOpacity>
                         <View style={[{flexDirection:direction},styles.dotsWrapperStyle,dotsWrapperStyle]}>
@@ -187,7 +188,7 @@ export default class Swiper extends React.Component {
                                 </View>
                             ))}
                         </View>
-                        <TouchableOpacity disabled={activeIndex+1>=this.count} style={{opacity:activeIndex+1>=this.count ? 0 : 1}} onPress={()=>this.moveUpDown()}>
+                        <TouchableOpacity disabled={activeIndex+1>=this.count} style={{opacity:activeIndex+1>=this.count ? overRangeButtonsOpacity : 1}} onPress={()=>this.moveUpDown()}>
                             {nextButtonElement || <Text style={[styles.nextButtonStyle,nextButtonStyle]}>{nextButtonText}</Text>}
                         </TouchableOpacity>
                     </View>
@@ -203,6 +204,7 @@ Swiper.propTypes = {
     onIndexChanged: PropTypes.func,
     actionMinWidth: PropTypes.number,
     children: PropTypes.node.isRequired,
+    overRangeButtonsOpacity: PropTypes.number,
     containerStyle: ViewPropTypes.style,
     swipeAreaStyle: ViewPropTypes.style,
     swipeWrapperStyle: ViewPropTypes.style,
@@ -224,6 +226,7 @@ Swiper.defaultProps = {
     direction: "row",
     index: 0,
     actionMinWidth: 0.25,
+    overRangeButtonsOpacity: 0,
     prevButtonText: "prev",
     nextButtonText: "next",
 };
