@@ -170,7 +170,7 @@ export default class Swiper extends React.Component {
                         },{transform:[{translateX:pan.x},{translateY:pan.y}]}]}
                         {...this._panResponder.panHandlers}
                     >
-                        {children.map((el,i)=>(<View key={i} style={{width,height}}>{el}</View>))}
+                        {!width ? null : children.map((el,i)=>(<View key={i} style={{width,height}}>{el}</View>))}
                     </Animated.View>
                     <View style={[styles.controlsWrapperStyle,{
                         flexDirection: direction,

@@ -1,6 +1,6 @@
 {
   "name": "react-native-web-swiper",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "homepage": "https://github.com/oxyii/react-native-web-swiper#readme",
   "main": "dist/index.js",
   "license": "MIT",
