@@ -66,7 +66,7 @@ export default class Screen extends React.Component {
 
 No. Just per-screen slider / swiper
 
-### White screen on web?
+### Empty white screen on web
 
 See [here](https://github.com/oxyii/react-native-web-swiper/issues/2#issuecomment-475060133)
 
