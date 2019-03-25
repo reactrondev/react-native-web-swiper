@@ -86,7 +86,7 @@ export default class Swiper extends React.Component {
                 const correction = this.props.direction==="row" ? gesture.moveX-gesture.x0 : gesture.moveY-gesture.y0;
                 if(Math.abs(correction) < ((this.props.direction==="row" ? this.state.width : this.state.height) * this.props.actionMinWidth))
                     return Animated.spring(this.state.pan,{toValue:{x:0,y:0}}).start();
-                this._changeIndex(correction>0);
+                this._changeIndex(correction>0 ? -1 : 1);
             }
         });
     }
@@ -103,7 +103,7 @@ export default class Swiper extends React.Component {
 
     moveUpDown(down=false) {
         this._fixState();
-        this._changeIndex(down);
+        this._changeIndex(down ? -1 : 1);
     }
 
     _fixState() {
@@ -113,16 +113,25 @@ export default class Swiper extends React.Component {
         this.state.pan.setValue({x: 0, y: 0});
     }
 
-    _changeIndex(decrement=false) {
+    _changeIndex(delta=1) {
         let move = {x:0,y:0};
-        if((this.state.activeIndex<=0 && decrement) || (!decrement && this.state.activeIndex+1>=this.count))
+        let skipChanges = (!delta);
+        let calcDelta = delta;
+        if(this.state.activeIndex<=0 && delta<0) {
+            skipChanges = (!this.props.loop);
+            calcDelta = this.count+delta;
+        } else if(this.state.activeIndex+1>=this.count && delta>0) {
+            skipChanges = (!this.props.loop);
+            calcDelta = -1*this.state.activeIndex+delta-1;
+        }
+        if(skipChanges)
             return Animated.spring(this.state.pan,{toValue:move}).start();
-        let index = !decrement ? this.state.activeIndex+1 : this.state.activeIndex-1;
+        let index = this.state.activeIndex+calcDelta;
         this.setState({activeIndex: index});
         if(this.props.direction==="row")
-            move.x = decrement ? this.state.width : this.state.width*-1;
+            move.x = this.state.width*-1*calcDelta;
         else
-            move.y = decrement ? this.state.height : this.state.height*-1;
+            move.y = this.state.height*-1*calcDelta;
         Animated.spring(this.state.pan,{toValue:move}).start();
         if(!!this.props.onIndexChanged) this.props.onIndexChanged(index);
     }
@@ -151,8 +160,10 @@ export default class Swiper extends React.Component {
             nextButtonElement,
             nextButtonStyle,
             nextButtonText,
-            overRangeButtonsOpacity,
+            loop,
         } = this.props;
+        if(!width) return (<View style={[styles.container,containerStyle]} onLayout={this._onLayout.bind(this)}/>);
+        const overRangeButtonsOpacity = !loop ? this.props.overRangeButtonsOpacity : this.props.overRangeButtonsOpacity || 1;
         let {children} = this.props;
         if(!Array.isArray(children)) children = [children];
         this.count = children.length;
@@ -171,12 +182,12 @@ export default class Swiper extends React.Component {
                         },{transform:[{translateX:pan.x},{translateY:pan.y}]}]}
                         {...this._panResponder.panHandlers}
                     >
-                        {!width ? null : children.map((el,i)=>(<View key={i} style={{width,height}}>{el}</View>))}
+                        {children.map((el,i)=>(<View key={i} style={{width,height}}>{el}</View>))}
                     </Animated.View>
                     <View style={[styles.controlsWrapperStyle,{
                         flexDirection: direction,
                     }, direction==="row" ? {left: 0} : {top: 0}, controlsWrapperStyle]}>
-                        <TouchableOpacity disabled={!activeIndex} style={{opacity:!activeIndex ? overRangeButtonsOpacity : 1}} onPress={()=>this.moveUpDown(true)}>
+                        <TouchableOpacity disabled={!activeIndex && !loop} style={{opacity:!activeIndex ? overRangeButtonsOpacity : 1}} onPress={()=>this.moveUpDown(true)}>
                             {prevButtonElement || <Text style={[styles.prevButtonStyle,prevButtonStyle]}>{prevButtonText}</Text>}
                         </TouchableOpacity>
                         <View style={[{flexDirection:direction},styles.dotsWrapperStyle,dotsWrapperStyle]}>
@@ -188,7 +199,7 @@ export default class Swiper extends React.Component {
                                 </View>
                             ))}
                         </View>
-                        <TouchableOpacity disabled={activeIndex+1>=this.count} style={{opacity:activeIndex+1>=this.count ? overRangeButtonsOpacity : 1}} onPress={()=>this.moveUpDown()}>
+                        <TouchableOpacity disabled={activeIndex+1>=this.count && !loop} style={{opacity:activeIndex+1>=this.count ? overRangeButtonsOpacity : 1}} onPress={()=>this.moveUpDown()}>
                             {nextButtonElement || <Text style={[styles.nextButtonStyle,nextButtonStyle]}>{nextButtonText}</Text>}
                         </TouchableOpacity>
                     </View>
@@ -205,6 +216,7 @@ Swiper.propTypes = {
     actionMinWidth: PropTypes.number,
     children: PropTypes.node.isRequired,
     overRangeButtonsOpacity: PropTypes.number,
+    loop: PropTypes.bool,
     containerStyle: ViewPropTypes.style,
     swipeAreaStyle: ViewPropTypes.style,
     swipeWrapperStyle: ViewPropTypes.style,
@@ -227,6 +239,7 @@ Swiper.defaultProps = {
     index: 0,
     actionMinWidth: 0.25,
     overRangeButtonsOpacity: 0,
+    loop: false,
     prevButtonText: "prev",
     nextButtonText: "next",
 };
