@@ -62,6 +62,10 @@ export default class Screen extends React.Component {
 }
 ```
 
+### Empty white screen on web
+
+See [here](https://github.com/oxyii/react-native-web-swiper/issues/2#issuecomment-475060133)
+
 ### Properties
 
 #### Basic
