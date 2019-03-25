@@ -77,13 +77,18 @@ export default class Swiper extends React.Component {
 
         this._panResponder = PanResponder.create({
             onMoveShouldSetResponderCapture: () => true,
-            onMoveShouldSetPanResponderCapture: (e, gestureState) => Math.abs(this.props.direction === "row" ? gestureState.dx : gestureState.dy) > 5,
+            onMoveShouldSetPanResponderCapture: (e, gestureState) => {
+                const allow = Math.abs(this.props.direction === "row" ? gestureState.dx : gestureState.dy) > 5;
+                if(allow) this.stopAutoplay();
+                return allow;
+            },
             onPanResponderGrant: (e, gestureState) => this._fixState(),
             onPanResponderMove: Animated.event([
                 null, this.props.direction === "row" ? {dx: this.state.pan.x} : {dy: this.state.pan.y},
             ]),
             onPanResponderRelease: (e, gesture) => {
                 const correction = this.props.direction==="row" ? gesture.moveX-gesture.x0 : gesture.moveY-gesture.y0;
+                this.startAutoplay();
                 if(Math.abs(correction) < ((this.props.direction==="row" ? this.state.width : this.state.height) * this.props.actionMinWidth))
                     return Animated.spring(this.state.pan,{toValue:{x:0,y:0}}).start();
                 this._changeIndex(correction>0 ? -1 : 1);
@@ -94,11 +99,27 @@ export default class Swiper extends React.Component {
     componentDidMount() {
         this.state.pan.x.addListener((value) => this._animatedValueX = value.value);
         this.state.pan.y.addListener((value) => this._animatedValueY = value.value);
+        this.startAutoplay();
     }
 
     componentWillUnmount() {
+        this.stopAutoplay();
         this.state.pan.x.removeAllListeners();
         this.state.pan.y.removeAllListeners();
+    }
+
+    startAutoplay() {
+        this.stopAutoplay();
+        if(!!this.props.autoplayTimeout) {
+            this.autoplay = setTimeout(() => {
+                this.moveUpDown(this.props.autoplayTimeout<0)
+            }, Math.abs(this.props.autoplayTimeout)*1000);
+        }
+    }
+
+    stopAutoplay() {
+        if(!!this.autoplay)
+            clearTimeout(this.autoplay);
     }
 
     moveUpDown(down=false) {
@@ -126,6 +147,7 @@ export default class Swiper extends React.Component {
         }
         if(skipChanges)
             return Animated.spring(this.state.pan,{toValue:move}).start();
+        this.stopAutoplay();
         let index = this.state.activeIndex+calcDelta;
         this.setState({activeIndex: index});
         if(this.props.direction==="row")
@@ -133,6 +155,7 @@ export default class Swiper extends React.Component {
         else
             move.y = this.state.height*-1*calcDelta;
         Animated.spring(this.state.pan,{toValue:move}).start();
+        this.startAutoplay();
         if(!!this.props.onIndexChanged) this.props.onIndexChanged(index);
     }
 
@@ -217,6 +240,7 @@ Swiper.propTypes = {
     children: PropTypes.node.isRequired,
     overRangeButtonsOpacity: PropTypes.number,
     loop: PropTypes.bool,
+    autoplayTimeout: PropTypes.number,
     containerStyle: ViewPropTypes.style,
     swipeAreaStyle: ViewPropTypes.style,
     swipeWrapperStyle: ViewPropTypes.style,
@@ -240,6 +264,7 @@ Swiper.defaultProps = {
     actionMinWidth: 0.25,
     overRangeButtonsOpacity: 0,
     loop: false,
+    autoplayTimeout: 0,
     prevButtonText: "prev",
     nextButtonText: "next",
 };

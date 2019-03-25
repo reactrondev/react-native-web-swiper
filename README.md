@@ -74,6 +74,7 @@ export default class Screen extends React.Component {
 | actionMinWidth | `0.25` | `number` | Minimal part of screen that must be swiped for index change. Default value 0.25 means 25% of slide width (or height if direction="column") |
 | overRangeButtonsOpacity | `0` | `number` | "Prev" button on first slide and "Next" button on last slide are invisible by default. You can set `opacity` style for these buttons ([#1](https://github.com/oxyii/react-native-web-swiper/issues/1)) |
 | loop | false | `bool` | Set to `true` to disable continuous loop mode |
+| autoplayTimeout | 0 | `number` | Delay between auto play transitions (in second). Set negative value for reverse autoplay :satisfied:. Autoplay disabled by default (`0`) |
 
 #### Custom style
 
