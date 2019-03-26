@@ -210,9 +210,11 @@ export default class Swiper extends React.Component {
                     <View style={[styles.controlsWrapperStyle,{
                         flexDirection: direction,
                     }, direction==="row" ? {left: 0} : {top: 0}, controlsWrapperStyle]}>
-                        <TouchableOpacity disabled={!activeIndex && !loop} style={{opacity:!activeIndex ? overRangeButtonsOpacity : 1}} onPress={()=>this.moveUpDown(true)}>
-                            {prevButtonElement || <Text style={[styles.prevButtonStyle,prevButtonStyle]}>{prevButtonText}</Text>}
-                        </TouchableOpacity>
+                        <View style={{opacity:!activeIndex ? overRangeButtonsOpacity : 1}}>
+                            <TouchableOpacity disabled={!activeIndex && !loop} onPress={()=>this.moveUpDown(true)}>
+                                {prevButtonElement || <Text style={[styles.prevButtonStyle,prevButtonStyle]}>{prevButtonText}</Text>}
+                            </TouchableOpacity>
+                        </View>
                         <View style={[{flexDirection:direction},styles.dotsWrapperStyle,dotsWrapperStyle]}>
                             {children.map((el,i)=>(
                                 <View key={i}>
@@ -222,9 +224,11 @@ export default class Swiper extends React.Component {
                                 </View>
                             ))}
                         </View>
-                        <TouchableOpacity disabled={activeIndex+1>=this.count && !loop} style={{opacity:activeIndex+1>=this.count ? overRangeButtonsOpacity : 1}} onPress={()=>this.moveUpDown()}>
-                            {nextButtonElement || <Text style={[styles.nextButtonStyle,nextButtonStyle]}>{nextButtonText}</Text>}
-                        </TouchableOpacity>
+                        <View style={{opacity:activeIndex+1>=this.count ? overRangeButtonsOpacity : 1}}>
+                            <TouchableOpacity disabled={activeIndex+1>=this.count && !loop} onPress={()=>this.moveUpDown()}>
+                                {nextButtonElement || <Text style={[styles.nextButtonStyle,nextButtonStyle]}>{nextButtonText}</Text>}
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>
