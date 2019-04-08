@@ -79,6 +79,8 @@ export default class Swiper extends React.Component {
             onPanResponderTerminationRequest: () => false,
             onMoveShouldSetResponderCapture: () => true,
             onMoveShouldSetPanResponderCapture: (e, gestureState) => {
+                if(this.props.onAnimationStart)
+                    this.props.onAnimationStart();
                 const allow = Math.abs(this.props.direction === "row" ? gestureState.dx : gestureState.dy) > 5;
                 if(allow) this.stopAutoplay();
                 return allow;
@@ -91,7 +93,10 @@ export default class Swiper extends React.Component {
                 const correction = this.props.direction==="row" ? gesture.moveX-gesture.x0 : gesture.moveY-gesture.y0;
                 this.startAutoplay();
                 if(Math.abs(correction) < ((this.props.direction==="row" ? this.state.width : this.state.height) * this.props.actionMinWidth))
-                    return Animated.spring(this.state.pan,{toValue:{x:0,y:0}}).start();
+                    return Animated.spring(this.state.pan,{toValue:{x:0,y:0}}).start(() => {
+                        if(this.props.onAnimationEnd)
+                            this.props.onAnimationEnd(this.state.activeIndex);
+                    });
                 this._changeIndex(correction>0 ? -1 : 1);
             }
         });
@@ -125,6 +130,8 @@ export default class Swiper extends React.Component {
 
     moveUpDown(down=false) {
         this._fixState();
+        if(this.props.onAnimationStart)
+            this.props.onAnimationStart();
         this._changeIndex(down ? -1 : 1);
     }
 
@@ -147,7 +154,10 @@ export default class Swiper extends React.Component {
             calcDelta = -1*this.state.activeIndex+delta-1;
         }
         if(skipChanges)
-            return Animated.spring(this.state.pan,{toValue:move}).start();
+            return Animated.spring(this.state.pan,{toValue:move}).start(() => {
+                if(this.props.onAnimationEnd)
+                    this.props.onAnimationEnd(this.state.activeIndex);
+            });
         this.stopAutoplay();
         let index = this.state.activeIndex+calcDelta;
         this.setState({activeIndex: index});
@@ -155,7 +165,10 @@ export default class Swiper extends React.Component {
             move.x = this.state.width*-1*calcDelta;
         else
             move.y = this.state.height*-1*calcDelta;
-        Animated.spring(this.state.pan,{toValue:move}).start();
+        Animated.spring(this.state.pan,{toValue:move}).start(() => {
+            if(this.props.onAnimationEnd)
+                this.props.onAnimationEnd(index);
+        });
         this.startAutoplay();
         if(!!this.props.onIndexChanged) this.props.onIndexChanged(index);
     }
@@ -241,6 +254,8 @@ Swiper.propTypes = {
     direction: PropTypes.oneOf(["row","column"]),
     index: PropTypes.number,
     onIndexChanged: PropTypes.func,
+    onAnimationStart: PropTypes.func,
+    onAnimationEnd: PropTypes.func,
     actionMinWidth: PropTypes.number,
     children: PropTypes.node.isRequired,
     overRangeButtonsOpacity: PropTypes.number,

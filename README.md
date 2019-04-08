@@ -75,6 +75,8 @@ See [here](https://github.com/oxyii/react-native-web-swiper/issues/2#issuecommen
 | direction | `"row"` | `enum("row","column")` | Horizontal ("row") or vertical ("column") mode |
 | index | `0` | `number` | Index number of initial slide |
 | onIndexChanged | `(newIndex) => null` | `func` | Called when active slide changed |
+| onAnimationStart | `() => null` | `func` | Called right before any swiper animation starts |
+| onAnimationEnd | `(newIndex) => null` | `func` | Called right after animation end |
 | actionMinWidth | `0.25` | `number` | Minimal part of screen that must be swiped for index change. Default value 0.25 means 25% of slide width (or height if direction="column") |
 | overRangeButtonsOpacity | `0` | `number` | "Prev" button on first slide and "Next" button on last slide are invisible by default. You can set `opacity` style for these buttons ([#1](https://github.com/oxyii/react-native-web-swiper/issues/1)) |
 | loop | `false` | `bool` | Set to `true` to enable continuous loop mode |
