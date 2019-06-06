@@ -79,6 +79,8 @@ export default class Swiper extends React.Component {
             onPanResponderTerminationRequest: () => false,
             onMoveShouldSetResponderCapture: () => true,
             onMoveShouldSetPanResponderCapture: (e, gestureState) => {
+                if(!this.props.swipingEnabled)
+                    return false;
                 if(this.props.onAnimationStart)
                     this.props.onAnimationStart();
                 const allow = Math.abs(this.props.direction === "row" ? gestureState.dx : gestureState.dy) > 5;
@@ -116,7 +118,7 @@ export default class Swiper extends React.Component {
 
     startAutoplay() {
         this.stopAutoplay();
-        if(!!this.props.autoplayTimeout) {
+        if(this.props.autoplayTimeout) {
             this.autoplay = setTimeout(() => {
                 this.moveUpDown(this.props.autoplayTimeout<0)
             }, Math.abs(this.props.autoplayTimeout)*1000);
@@ -124,8 +126,7 @@ export default class Swiper extends React.Component {
     }
 
     stopAutoplay() {
-        if(!!this.autoplay)
-            clearTimeout(this.autoplay);
+        this.autoplay && clearTimeout(this.autoplay);
     }
 
     moveUpDown(down=false) {
@@ -170,7 +171,7 @@ export default class Swiper extends React.Component {
                 this.props.onAnimationEnd(index);
         });
         this.startAutoplay();
-        if(!!this.props.onIndexChanged) this.props.onIndexChanged(index);
+        this.props.onIndexChanged && this.props.onIndexChanged(index);
     }
 
     _onLayout(event) {
@@ -198,6 +199,7 @@ export default class Swiper extends React.Component {
             nextButtonStyle,
             nextButtonText,
             loop,
+            buttonsEnabled,
         } = this.props;
         if(!width) return (<View style={[styles.container,containerStyle]} onLayout={this._onLayout.bind(this)}/>);
         const overRangeButtonsOpacity = !loop ? this.props.overRangeButtonsOpacity : this.props.overRangeButtonsOpacity || 1;
@@ -221,29 +223,31 @@ export default class Swiper extends React.Component {
                     >
                         {children.map((el,i)=>(<View key={i} style={{width,height}}>{el}</View>))}
                     </Animated.View>
-                    <View style={[styles.controlsWrapperStyle,{
-                        flexDirection: direction,
-                    }, direction==="row" ? {left: 0} : {top: 0}, controlsWrapperStyle]}>
-                        <View style={{opacity:!activeIndex ? overRangeButtonsOpacity : 1}}>
-                            <TouchableOpacity disabled={!activeIndex && !loop} onPress={()=>this.moveUpDown(true)}>
-                                {prevButtonElement || <Text style={[styles.prevButtonStyle,prevButtonStyle]}>{prevButtonText}</Text>}
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[{flexDirection:direction},styles.dotsWrapperStyle,dotsWrapperStyle]}>
-                            {children.map((el,i)=>(
+                    {!buttonsEnabled ? null : (
+                      <View style={[styles.controlsWrapperStyle,{
+                          flexDirection: direction,
+                      }, direction==="row" ? {left: 0} : {top: 0}, controlsWrapperStyle]}>
+                          <View style={{opacity:!activeIndex ? overRangeButtonsOpacity : 1}}>
+                              <TouchableOpacity disabled={!activeIndex && !loop} onPress={()=>this.moveUpDown(true)}>
+                                  {prevButtonElement || <Text style={[styles.prevButtonStyle,prevButtonStyle]}>{prevButtonText}</Text>}
+                              </TouchableOpacity>
+                          </View>
+                          <View style={[{flexDirection:direction},styles.dotsWrapperStyle,dotsWrapperStyle]}>
+                              {children.map((el,i)=>(
                                 <View key={i}>
                                     {i===activeIndex
-                                        ? activeDotElement || <View style={[styles.activeDotStyle,activeDotStyle]} />
-                                        : dotElement || <View style={[styles.dotStyle,dotStyle]} />}
+                                      ? activeDotElement || <View style={[styles.activeDotStyle,activeDotStyle]} />
+                                      : dotElement || <View style={[styles.dotStyle,dotStyle]} />}
                                 </View>
-                            ))}
-                        </View>
-                        <View style={{opacity:activeIndex+1>=this.count ? overRangeButtonsOpacity : 1}}>
-                            <TouchableOpacity disabled={activeIndex+1>=this.count && !loop} onPress={()=>this.moveUpDown()}>
-                                {nextButtonElement || <Text style={[styles.nextButtonStyle,nextButtonStyle]}>{nextButtonText}</Text>}
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                              ))}
+                          </View>
+                          <View style={{opacity:activeIndex+1>=this.count ? overRangeButtonsOpacity : 1}}>
+                              <TouchableOpacity disabled={activeIndex+1>=this.count && !loop} onPress={()=>this.moveUpDown()}>
+                                  {nextButtonElement || <Text style={[styles.nextButtonStyle,nextButtonStyle]}>{nextButtonText}</Text>}
+                              </TouchableOpacity>
+                          </View>
+                      </View>
+                    )}
                 </View>
             </View>
         );
@@ -261,6 +265,8 @@ Swiper.propTypes = {
     overRangeButtonsOpacity: PropTypes.number,
     loop: PropTypes.bool,
     autoplayTimeout: PropTypes.number,
+    swipingEnabled: PropTypes.bool,
+    buttonsEnabled: PropTypes.bool,
     containerStyle: ViewPropTypes.style,
     swipeAreaStyle: ViewPropTypes.style,
     swipeWrapperStyle: ViewPropTypes.style,
@@ -285,6 +291,8 @@ Swiper.defaultProps = {
     overRangeButtonsOpacity: 0,
     loop: false,
     autoplayTimeout: 0,
+    swipingEnabled: true,
+    buttonsEnabled: true,
     prevButtonText: "prev",
     nextButtonText: "next",
 };

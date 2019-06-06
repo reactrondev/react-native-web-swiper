@@ -81,6 +81,8 @@ See [here](https://github.com/oxyii/react-native-web-swiper/issues/2#issuecommen
 | overRangeButtonsOpacity | `0` | `number` | "Prev" button on first slide and "Next" button on last slide are invisible by default. You can set `opacity` style for these buttons ([#1](https://github.com/oxyii/react-native-web-swiper/issues/1)) |
 | loop | `false` | `bool` | Set to `true` to enable continuous loop mode |
 | autoplayTimeout | `0` | `number` | Delay between auto play transitions (in second). Set negative value for reverse autoplay :satisfied:. Autoplay disabled by default |
+| swipingEnabled | `true` | `bool` | Set to `false` to disable swiping mechanism. Allow to use Prev / Next buttons only ([#8](https://github.com/oxyii/react-native-web-swiper/issues/8)) |
+| buttonsEnabled | `true` | `bool` | Set to `false` to skip dots and Prev / Next buttons. Swiping mechanism will still work |
 
 #### Custom style
 
