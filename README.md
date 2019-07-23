@@ -129,7 +129,7 @@ You can override any style
 
 ### Programmatically jump to a particular slide
 
-Swiper instances have a `goto(index)` method. Reference can be used to call this method:
+Swiper instances have a `goto(index)` and `moveUpDown(isDown = false)` methods. Reference can be used to call this method:
 
 ```jsx
 ...
@@ -141,4 +141,11 @@ Swiper instances have a `goto(index)` method. Reference can be used to call this
   Go to slide 2
 </Text>
 ...
+<Text onPress={() => this.swiper && this.swiper.moveUpDown(true)}>
+  Go to prev slide
+</Text>
+...
+<Text onPress={() => this.swiper && this.swiper.moveUpDown()}>
+  Go to next slide
+</Text>
 ```
