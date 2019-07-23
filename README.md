@@ -129,7 +129,7 @@ You can override any style
 
 ### Programmatically jump to a particular slide
 
-Swiper instances have a `goto(index)` and `moveUpDown(isDown = false)` methods. Reference can be used to call this method:
+Swiper instances have a `goto(index)` and `moveUpDown(isDown = false)` methods. Reference can be used to call this methods:
 
 ```jsx
 ...
