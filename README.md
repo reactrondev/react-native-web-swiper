@@ -66,6 +66,10 @@ export default class Screen extends React.Component {
 
 See [here](https://github.com/oxyii/react-native-web-swiper/issues/2#issuecomment-475060133)
 
+### useNativeDriver
+
+It's impossible because of [this](https://github.com/facebook/react-native/issues/13377)
+
 ### Properties
 
 #### Basic
