@@ -2,19 +2,19 @@
 
 Simple swiper / slider. Works both on React-Native and React-Native-Web.
 
-### Demo
+## Demo
 
 Native: https://snack.expo.io/@oxyii/react-native-web-swiper
 
 Web: https://oxyii.github.io/react-native-web-swiper
 
-### Installation
+## Installation
 
 ```bash
 $ npm i react-native-web-swiper --save
 ```
 
-### Basic Usage
+## Usage
 
 ```jsx
 import React from 'react';
@@ -62,24 +62,10 @@ export default class Screen extends React.Component {
 }
 ```
 
-### Empty white screen on web
-
-See [here](https://github.com/oxyii/react-native-web-swiper/issues/2#issuecomment-475060133)
-
-### useNativeDriver
-
-It's impossible because of [this](https://github.com/facebook/react-native/issues/13377)
-
-## Usage
+### With props
 
 ```js
 import { Swiper } from 'react-native-elements'
-
-<Swiper>
-  <View style={{ flex: 1 }}>{/* any content */}</View>
-  <View style={{ flex: 1 }}>{/* any content */}</View>
-  {/* ... */}
-</Swiper>
 
 <Swiper
   vertical {/* slide up / down instead left / right */}
@@ -100,25 +86,27 @@ import { Swiper } from 'react-native-elements'
 
 ## Props
 
-- [`vertical`](#vertical)
-- [`from`](#from)
-- [`loop`](#loop)
-- [`timeout`](#timeout)
-- [`gesturesEnabled`](#gesturesenabled)
-- [`springConfig`](#springconfig)
-- [`minDistanceToCapture`](#mindistancetocapture)
-- [`minDistanceForAction`](#mindistanceforaction)
-- [`positionFixed`](#positionfixed)
-- [`containerStyle`](#containerstyle)
-- [`innerContainerStyle`](#innercontainerstyle)
-- [`swipeAreaStyle`](#swipeareastyle)
-- [`slideWrapperStyle`](#slidewrapperstyle)
-- [`controlsEnabled`](#controlsenabled)
-- [`controlsProps`](#controlsprops)
-- [`Controls`](#controls)
-- [`onAnimationStart`](#onanimationstart)
-- [`onAnimationEnd`](#onanimationend)
-- [`onIndexChanged`](#onindexchanged)
+|         Prop         |    Default   |          Type         | Description |
+| :------------------- |:------------:| :--------------------:| :-----------|
+| vertical             | `false`      | `boolean`             | Swiper vertical layout |
+| from                 | `0`          | `number`              | Initial slide index |
+| loop                 | `false`      | `boolean`             | Set to `true` to enable continuous loop mode |
+| timeout              | `0`          | `number`              | Delay between auto play transitions (in second). Set negative value for reverse autoplay :satisfied:. Autoplay disabled by default |
+| gesturesEnabled      | `true`       | `boolean`             | Set to `false` to disable swiping mechanism. Allow to use Prev / Next buttons only |
+| springConfig         |              | [`Animated.spring`](https://facebook.github.io/react-native/docs/animated#spring) | Tune spring animation on autoplay, touch release or slides changes via buttons |
+| minDistanceToCapture | `5`          | `number`              | Initiate animation after swipe this distance. It fix gesture collisions inside ScrollView |
+| minDistanceForAction | `0.2`        | `number`              | Minimal part of swiper width (or height for vertical) must be swiped for changing index. Otherwise animation restore current slide. Default value 0.2 means that 20% must be swiped for change index |
+| positionFixed        | `false`      | `boolean`             | Swiper inner container position `fixed` instead `relative`. Fix mobile safari vertical bounce |
+| containerStyle       |              | `ViewPropTypes.style` | Outer (root) container style |
+| innerContainerStyle  |              | `ViewPropTypes.style` | Inner container style |
+| swipeAreaStyle       |              | `ViewPropTypes.style` | Swipe area style |
+| slideWrapperStyle    |              | `ViewPropTypes.style` | Each slide wrapper style |
+| controlsEnabled      | `true`       | `boolean`             | Dots and control buttons visible and enabled |
+| Controls             |              | `React.Component`     | Custom controls comp77onent |
+| onAnimationStart     |              | `function`            | Any swiper animation start |
+| onAnimationEnd       |              | `function`            | Any swiper animation end |
+| onIndexChanged       |              | `function`            | Called when active index changed |
+| controlsProps        |              | `object`              | see below |
 
 ### Controls Props
 
@@ -148,26 +136,28 @@ You can adjust controls position by placing into relevant placeholder:
 />
 ```
 
-- [`cellsStyle`](#cellsstyle)
-- [`cellsContent`](#cellscontent)
-- [`dotsPos`](#dotspos)
-- [`prevPos`](#prevpos)
-- [`nextPos`](#nextpos)
-- [`prevTitle`](#prevtitle)
-- [`nextTitle`](#nexttitle)
-- [`prevProps`](#prevprops)
-- [`nextProps`](#nextprops)
-- [`PrevComponent`](#prevcomponent)
-- [`NextComponent`](#nextcomponent)
-- [`firstPrevElement`](#firstprevelement)
-- [`lastNextElement`](#lastnextelement)
-- [`dotsTouchable`](#dotstouchable)
-- [`dotsWrapperStyle`](#dotswrapperstyle)
-- [`dotProps`](#dotprops)
-- [`dotActiveStyle`](#dotactivestyle)
-- [`DotComponent`](#dotcomponent)
+|         Prop         |    Default   |           Type           | Description |
+| :------------------- |:------------:| :-----------------------:| :-----------|
+| cellsStyle           |              | `object`                 | Controls corners placeholders styles. Allowed keys is: `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` and `bottom-right`, allowed values is `ViewPropTypes.style` |
+| cellsContent         |              | `object`                 | Controls corners placeholders additional content. Allowed keys is: `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` and `bottom-right`, allowed values is `string` **OR** `React element` |
+| dotsPos              | `'bottom'` **OR** `'right'` if vertical | `boolean` **OR** `enum('top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right')` | Dots position |
+| prevPos              | `'bottom-left'` **OR** `'top-right'` if vertical | `boolean` **OR** `enum('top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right')` | Prev button position |
+| nextPos              | `'bottom-right'` | `boolean` **OR** `enum('top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right')` | Next button position |
+| prevTitle            | `'Prev'`     | `string`                 | Prev button title |
+| nextTitle            | `'Next'`     | `string`                 | Next button title |
+| prevTitleStyle       |              | `Text.propTypes.style`   | Customize prev button title |
+| nextTitleStyle       |              | `Text.propTypes.style`   | Customize next button title |
+| PrevComponent        |              | `React.Component`        | Custom prev button component |
+| NextComponent        |              | `React.Component`        | Custom next button component |
+| firstPrevElement     |              | `element`                | Custom prev element on first slide (if not loop) |
+| lastNextElement      |              | `element`                | Custom next element on last slide (if not loop) |
+| dotsTouchable        | `false`      | `boolean`                | Touches over dots will move swiper to relative slide |
+| dotsWrapperStyle     |              | `ViewPropTypes.style`    | Dots wrapper View style |
+| dotProps             |              | `object`                 | `react-native-elements` [Badge props](https://react-native-training.github.io/react-native-elements/docs/badge.html#props) |
+| dotActiveStyle       |              | `object`                 | Additional style to active dot. Will be added to dot [badgeStyle](https://react-native-training.github.io/react-native-elements/docs/badge.html#badgestyle) |
+| DotComponent         |              | `React.Component`        | Custom dot component |
 
-### Interaction methods
+## Interaction methods
 
 Store a reference to the Swiper in your component by using the ref prop
 provided by React ([see docs](https://reactjs.org/docs/refs-and-the-dom.html)):
@@ -193,375 +183,3 @@ Then you can manually trigger swiper from anywhere:
   const index = swiperRef.getActiveIndex();
 };
 ```
-
----
-
-## Reference
-
-### `vertical`
-
-Swiper vertical layout
-
-|  Type   | Default |
-| :-----: | :-----: |
-| boolean |  false  |
-
----
-
-### `from`
-
-Initial slide index
-
-|  Type  | Default |
-| :----: | :-----: |
-| number |    0    |
-
----
-
-### `loop`
-
-Allow loop
-
-|  Type   | Default |
-| :-----: | :-----: |
-| boolean |  false  |
-
----
-
-### `timeout`
-
-Autoplay slider timeout in secs. Negative value will play reverse
-
-|  Type  | Default |
-| :----: | :-----: |
-| number |    0    |
-
----
-
-### `gesturesEnabled`
-
-Allow to swipe
-
-|  Type   | Default |
-| :-----: | :-----: |
-| boolean |  true   |
-
----
-
-### `springConfig`
-
-Tune spring animation on autoplay, touch release or slides changes via buttons.
-
-See official `react-native` [docs](https://facebook.github.io/react-native/docs/animated#spring)
-
----
-
-### `minDistanceToCapture`
-
-Initiate animation after swipe this distance. It fix gesture collisions inside ScrollView
-
-|  Type  | Default |
-| :----: | :-----: |
-| number |    5    |
-
----
-
-### `minDistanceForAction`
-
-Minimal part of swiper width (or height for vertical) must be swiped for changing index.
-Otherwise animation restore current slide. Default value 0.2 means that 20% must be swiped for change index
-
-|  Type  | Default |
-| :----: | :-----: |
-| number |   0.2   |
-
----
-
-### `positionFixed`
-
-Swiper inner container position `fixed` instead `relative`. Fix mobile safari vertical bounce
-
-|  Type   | Default |
-| :-----: | :-----: |
-| boolean |  false  |
-
----
-
-### `containerStyle`
-
-Outer (root) container style
-
-|      Type      | Default |
-| :------------: | :-----: |
-| object (style) |  none   |
-
----
-
-### `innerContainerStyle`
-
-Inner container style
-
-|      Type      | Default |
-| :------------: | :-----: |
-| object (style) |  none   |
-
----
-
-### `swipeAreaStyle`
-
-Swipe area style
-
-|      Type      | Default |
-| :------------: | :-----: |
-| object (style) |  none   |
-
----
-
-### `slideWrapperStyle`
-
-Each slide wrapper style
-
-|      Type      | Default |
-| :------------: | :-----: |
-| object (style) |  none   |
-
----
-
-### `controlsEnabled`
-
-Dots and control buttons visible and enabled
-
-|  Type   | Default |
-| :-----: | :-----: |
-| boolean |  true   |
-
----
-
-### `Controls`
-
-Custom controls component
-
-|   Type    | Default  |
-| :-------: | :------: |
-| component | internal |
-
----
-
-### `onAnimationStart`
-
-Any swiper animation start
-
-|   Type   | Default |
-| :------: | :-----: |
-| function |  none   |
-
----
-
-### `onAnimationEnd`
-
-Any swiper animation end
-
-|   Type   | Default |
-| :------: | :-----: |
-| function |  none   |
-
----
-
-### `onIndexChanged`
-
-Called when active index changed
-
-|   Type   | Default |
-| :------: | :-----: |
-| function |  none   |
-
----
-
-## `controlsProps`
-
-|   Type   | Default |
-| :------: | :-----: |
-|  object  |  below  |
-
----
-
-### `cellsStyle`
-
-Controls corners placeholders styles.
-Allowed keys is: `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` and `bottom-right`,
-allowed values is `object (style)`
-
-|   Type   | Default |
-| :------: | :-----: |
-|  object  |  none   |
-
----
-
-### `cellsContent`
-
-Controls corners placeholders additional content
-Allowed keys is: `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` and `bottom-right`,
-allowed values is `string  OR  React element`
-
----
-
-### `dotsPos`
-
-Dots position.
-Allowed values: `boolean` or `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom`, `bottom-right`
-
-|             Type            |                Default              |
-| :-------------------------: | :---------------------------------: |
-|  boolean **OR** enum above  | 'bottom' **OR** 'right' if vertical |
-
----
-
-### `prevPos`
-
-Prev button position.
-Allowed values: `boolean` or `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom`, `bottom-right`
-
-|             Type            |                      Default                 |
-| :-------------------------: | :------------------------------------------: |
-|  boolean **OR** enum above  | 'bottom-left' **OR** 'top-right' if vertical |
-
----
-
-### `nextPos`
-
-Next button position.
-Allowed values: `boolean` or `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom`, `bottom-right`
-
-|             Type            |     Default    |
-| :-------------------------: | :------------: |
-|  boolean **OR** enum above  | 'bottom-right' |
-
----
-
-### `prevTitle`
-
-Prev button title
-
-|   Type   | Default |
-| :------: | :-----: |
-|  string  | 'Prev'  |
-
----
-
-### `nextTitle`
-
-Next button title
-
-|   Type   | Default |
-| :------: | :-----: |
-|  string  | 'Prev'  |
-
----
-
-### `dotsTouchable`
-
-Touches over dots will move swiper to relative slide
-
-|  Type   | Default |
-| :-----: | :-----: |
-| boolean |  false  |
-
----
-
-### `dotsWrapperStyle`
-
-Dots wrapper View style
-
-|      Type      | Default |
-| :------------: | :-----: |
-| object (style) |  none   |
-
----
-
-### `dotProps`
-
-Customizing dot with [Badge](/react-native-elements/docs/badge.html) props
-
-|                                      Type                                         | Default |
-| :-------------------------------------------------------------------------------: | :-----: |
-| {[...Badge props](/react-native-elements/docs/badge.html#props)} |  none   |
-
----
-
-### `dotActiveStyle`
-
-Additional style to active dot
-
-|      Type      | Default |
-| :------------: | :-----: |
-| object (style) |  none   |
-
----
-
-### `DotComponent`
-
-Custom dot component
-
-|   Type    |                              Default                             |
-| :-------: | :--------------------------------------------------------------: |
-| component | [Badge](/react-native-elements/docs/badge.html) |
-
----
-
-### `prevProps`
-
-Customize prev button with [Button](/react-native-elements/docs/button.html) props
-
-|                                        Type                                         | Default |
-| :---------------------------------------------------------------------------------: | :-----: |
-| {[...Button props](/react-native-elements/docs/button.html#props)} |  none   |
-
----
-
-### `nextProps`
-
-Customize next button with [Button](/react-native-elements/docs/button.html) props
-
-|                                        Type                                         | Default |
-| :---------------------------------------------------------------------------------: | :-----: |
-| {[...Button props](/react-native-elements/docs/button.html#props)} |  none   |
-
----
-
-### `PrevComponent`
-
-Custom prev button component
-
-|   Type    |                               Default                              |
-| :-------: | :----------------------------------------------------------------: |
-| component | [Button](/react-native-elements/docs/button.html) |
-
----
-
-### `NextComponent`
-
-Custom next button component
-
-|   Type    |                               Default                              |
-| :-------: | :----------------------------------------------------------------: |
-| component | [Button](/react-native-elements/docs/button.html) |
-
----
-
-### `firstPrevElement`
-
-Custom prev element on first slide (if not loop)
-
-|   Type    | Default  |
-| :-------: | :------: |
-| component |   none   |
-
----
-
-### `lastNextElement`
-
-Custom next element on last slide (if not loop)
-
-|   Type    | Default  |
-| :-------: | :------: |
-| component |   none   |

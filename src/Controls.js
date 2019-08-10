@@ -97,14 +97,14 @@ export default class DefaultControls extends React.Component {
     );
   }
 
-  _renderButton({ type, title, onPress, ...props }) {
+  _renderButton({ type, title, titleStyle, onPress, ...props }) {
     return (
       <Button
         theme={{ colors }}
         type="clear"
         onPress={onPress}
         title={title}
-        titleStyle={styles.buttonTitleStyle({ colors }, type)}
+        titleStyle={StyleSheet.flatten([styles.buttonTitleStyle({ colors }, type), titleStyle])}
         {...props}
       />
     );
@@ -116,7 +116,7 @@ export default class DefaultControls extends React.Component {
       isFirst,
       prevTitle,
       firstPrevElement,
-      prevProps,
+      prevTitleStyle,
       PrevComponent = this._renderButton,
     } = this.props;
     if (isFirst) {
@@ -126,8 +126,8 @@ export default class DefaultControls extends React.Component {
       <PrevComponent
         type="prev"
         title={prevTitle}
+        titleStyle={prevTitleStyle}
         onPress={goToPrev}
-        {...prevProps}
       />
     );
   }
@@ -221,8 +221,8 @@ DefaultControls.propTypes = {
   dotActiveStyle: ViewPropTypes.style,
   DotComponent: PropTypes.func,
 
-  prevProps: PropTypes.shape(Button.propTypes),
-  nextProps: PropTypes.shape(Button.propTypes),
+  prevTitleStyle: Text.propTypes.style,
+  nextTitleStyle: Text.propTypes.style,
   PrevComponent: PropTypes.func,
   NextComponent: PropTypes.func,
   firstPrevElement: nodeType,

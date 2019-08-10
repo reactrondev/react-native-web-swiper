@@ -163,14 +163,14 @@ interface SwiperControlsProps {
     DotComponent?: React.ComponentClass;
 
     /**
-     * Customize prev button with Button props
+     * Customize prev button title
      */
-    prevProps?: StyleProp<TextStyle>;
+    prevTitleStyle?: StyleProp<TextStyle>;
 
     /**
-     * Customize next button with Button props
+     * Customize next button title
      */
-    nextProps?: StyleProp<TextStyle>;
+    nextTitleStyle?: StyleProp<TextStyle>;
 
     /**
      * Custom prev button component
