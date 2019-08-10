@@ -138,7 +138,7 @@ export default class DefaultControls extends React.Component {
       isLast,
       nextTitle,
       lastNextElement,
-      nextProps,
+      nextTitleStyle,
       NextComponent = this._renderButton,
     } = this.props;
     if (isLast) {
@@ -148,8 +148,8 @@ export default class DefaultControls extends React.Component {
       <NextComponent
         type="next"
         title={nextTitle}
+        titleStyle={nextTitleStyle}
         onPress={goToNext}
-        {...nextProps}
       />
     );
   }

@@ -1,9 +1,9 @@
 {
   "name": "react-native-web-swiper",
-  "version": "2.0.0-rc2",
+  "version": "2.0.0-rc4",
   "homepage": "https://github.com/oxyii/react-native-web-swiper#readme",
   "types": "./index.d.ts",
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "license": "MIT",
   "keywords": [
     "react-native",
