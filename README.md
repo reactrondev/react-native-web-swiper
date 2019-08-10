@@ -70,86 +70,498 @@ See [here](https://github.com/oxyii/react-native-web-swiper/issues/2#issuecommen
 
 It's impossible because of [this](https://github.com/facebook/react-native/issues/13377)
 
-### Properties
+## Usage
 
-#### Basic
+```js
+import { Swiper } from 'react-native-elements'
 
-| Prop  | Default  | Type | Description |
-| :------------ |:---------------:| :---------------:| :-----|
-| direction | `"row"` | `enum("row","column")` | Horizontal ("row") or vertical ("column") mode |
-| index | `0` | `number` | Index number of initial slide |
-| onIndexChanged | `(newIndex) => null` | `func` | Called when active slide changed |
-| onAnimationStart | `() => null` | `func` | Called right before any swiper animation starts |
-| onAnimationEnd | `(newIndex) => null` | `func` | Called right after animation end |
-| actionMinWidth | `0.25` | `number` | Minimal part of screen that must be swiped for index change. Default value 0.25 means 25% of slide width (or height if direction="column") |
-| overRangeButtonsOpacity | `0` | `number` | "Prev" button on first slide and "Next" button on last slide are invisible by default. You can set `opacity` style for these buttons ([#1](https://github.com/oxyii/react-native-web-swiper/issues/1)) |
-| loop | `false` | `bool` | Set to `true` to enable continuous loop mode |
-| autoplayTimeout | `0` | `number` | Delay between auto play transitions (in second). Set negative value for reverse autoplay :satisfied:. Autoplay disabled by default |
-| swipingEnabled | `true` | `bool` | Set to `false` to disable swiping mechanism. Allow to use Prev / Next buttons only ([#8](https://github.com/oxyii/react-native-web-swiper/issues/8)) |
-| buttonsEnabled | `true` | `bool` | Set to `false` to skip dots and Prev / Next buttons. Swiping mechanism will still work |
-
-#### Custom style
-
-Swiper has the following structure
-
-```jsx
-<View style={containerStyle}>
-  <View style={swipeAreaStyle}>
-    <View style={swipeWrapperStyle}>
-      ...
-    </View>
-    <View style={controlsWrapperStyle}>
-      {prevButtonElement || <Text style={prevButtonStyle}>{prevButtonText}</Text>}
-      <View style={dotsWrapperStyle}>
-        {dotElement || <View style={dotStyle}/>}
-        //or
-        {activeDotElement || <View style={activeDotStyle}/>}
-      </View>
-      {nextButtonElement || <Text style={nextButtonStyle}>{nextButtonText}</Text>}
-    </View>    
-  </View>
-</View>
-```
-
-You can override any style
-
-| Prop  | Type |
-| :------------ | :---------------:|
-| prevButtonElement | `element` |
-| prevButtonStyle | `Text.propTypes.style` |
-| prevButtonText | `string` |
-| nextButtonElement | `element` |
-| nextButtonStyle | `Text.propTypes.style` |
-| nextButtonText | `string` |
-| containerStyle | `ViewPropTypes.style` |
-| swipeAreaStyle | `ViewPropTypes.style` |
-| swipeWrapperStyle | `ViewPropTypes.style` |
-| controlsWrapperStyle | `ViewPropTypes.style` |
-| dotsWrapperStyle | `ViewPropTypes.style` |
-| dotStyle | `ViewPropTypes.style` |
-| activeDotStyle | `ViewPropTypes.style` |
-| dotElement | `element` |
-| activeDotElement | `element` |
-
-### Programmatically jump to a particular slide
-
-Swiper instances have a `goto(index)` and `moveUpDown(isDown = false)` methods. Reference can be used to call this methods:
-
-```jsx
-...
-<Swiper ref={swiper => this.swiper = swiper}>
-  ...
+<Swiper>
+  <View style={{ flex: 1 }}>{/* any content */}</View>
+  <View style={{ flex: 1 }}>{/* any content */}</View>
+  {/* ... */}
 </Swiper>
-...
-<Text onPress={() => this.swiper && this.swiper.goto(1)}>
-  Go to slide 2
-</Text>
-...
-<Text onPress={() => this.swiper && this.swiper.moveUpDown(true)}>
-  Go to prev slide
-</Text>
-...
-<Text onPress={() => this.swiper && this.swiper.moveUpDown()}>
-  Go to next slide
-</Text>
+
+<Swiper
+  vertical {/* slide up / down instead left / right */}
+  from={1} {/* initial slide is second */}
+  loop {/* back to first slide after last */}
+  timeout={2} {/* autoplay duration (2 secs) */}
+  springConfig={{ speed: 11 }} {/* RN Animated.spring config */}
+  minDistanceForAction={0.15} {/* Swipe less that 15% keep active slide */}
+  positionFixed {/* Fix mobile safari vertical bounces */}
+>
+  <View style={{ flex: 1 }} /> {/* Slide 1 */}
+  <View style={{ flex: 1 }} /> {/* Slide 2 */}
+  {/* ... */}
+</Swiper>
 ```
+
+---
+
+## Props
+
+- [`vertical`](#vertical)
+- [`from`](#from)
+- [`loop`](#loop)
+- [`timeout`](#timeout)
+- [`gesturesEnabled`](#gesturesenabled)
+- [`springConfig`](#springconfig)
+- [`minDistanceToCapture`](#mindistancetocapture)
+- [`minDistanceForAction`](#mindistanceforaction)
+- [`positionFixed`](#positionfixed)
+- [`containerStyle`](#containerstyle)
+- [`innerContainerStyle`](#innercontainerstyle)
+- [`swipeAreaStyle`](#swipeareastyle)
+- [`slideWrapperStyle`](#slidewrapperstyle)
+- [`controlsEnabled`](#controlsenabled)
+- [`controlsProps`](#controlsprops)
+- [`Controls`](#controls)
+- [`onAnimationStart`](#onanimationstart)
+- [`onAnimationEnd`](#onanimationend)
+- [`onIndexChanged`](#onindexchanged)
+
+### Controls Props
+
+Over the swiper we need to create a controls layer. But this layer will block the possibility of swiper layer control.
+We created 9 controls placeholders to solve this problem:
+`top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` and `bottom-right`.
+You can adjust controls position by placing into relevant placeholder:
+
+```js
+<Swiper
+  ...
+  controlsProps={{
+    prevTitle: 'prev button title',
+    nextTitle: 'next button title',
+    dotsTouchable: true, {/* touch over dot will make swiper move to rel slide */}
+    dotsPos: 'top',
+    prevPos: false, {/* hide prev button */}
+    nextPos: 'top-right',
+    cellsStyle: {
+      'top': { padding: 5, backgroundColor: 'rgba(0, 0, 0, .3)' },
+      'top-left': { /* any custom placeholder style */ },
+    },
+    cellsContent: {
+      'bottom-right': <AnyComponent /> {/* Additional content in placeholder */}
+    }
+  }}
+/>
+```
+
+- [`cellsStyle`](#cellsstyle)
+- [`cellsContent`](#cellscontent)
+- [`dotsPos`](#dotspos)
+- [`prevPos`](#prevpos)
+- [`nextPos`](#nextpos)
+- [`prevTitle`](#prevtitle)
+- [`nextTitle`](#nexttitle)
+- [`prevProps`](#prevprops)
+- [`nextProps`](#nextprops)
+- [`PrevComponent`](#prevcomponent)
+- [`NextComponent`](#nextcomponent)
+- [`firstPrevElement`](#firstprevelement)
+- [`lastNextElement`](#lastnextelement)
+- [`dotsTouchable`](#dotstouchable)
+- [`dotsWrapperStyle`](#dotswrapperstyle)
+- [`dotProps`](#dotprops)
+- [`dotActiveStyle`](#dotactivestyle)
+- [`DotComponent`](#dotcomponent)
+
+### Interaction methods
+
+Store a reference to the Swiper in your component by using the ref prop
+provided by React ([see docs](https://reactjs.org/docs/refs-and-the-dom.html)):
+
+```js
+const swiperRef = useRef(null);
+
+...
+
+<Swiper
+  ref={swiperRef}
+  ...
+/>
+```
+
+Then you can manually trigger swiper from anywhere:
+
+```js
+() => {
+  swiperRef.goTo(1);
+  swiperRef.goToPrev();
+  swiperRef.goToNext();
+  const index = swiperRef.getActiveIndex();
+};
+```
+
+---
+
+## Reference
+
+### `vertical`
+
+Swiper vertical layout
+
+|  Type   | Default |
+| :-----: | :-----: |
+| boolean |  false  |
+
+---
+
+### `from`
+
+Initial slide index
+
+|  Type  | Default |
+| :----: | :-----: |
+| number |    0    |
+
+---
+
+### `loop`
+
+Allow loop
+
+|  Type   | Default |
+| :-----: | :-----: |
+| boolean |  false  |
+
+---
+
+### `timeout`
+
+Autoplay slider timeout in secs. Negative value will play reverse
+
+|  Type  | Default |
+| :----: | :-----: |
+| number |    0    |
+
+---
+
+### `gesturesEnabled`
+
+Allow to swipe
+
+|  Type   | Default |
+| :-----: | :-----: |
+| boolean |  true   |
+
+---
+
+### `springConfig`
+
+Tune spring animation on autoplay, touch release or slides changes via buttons.
+
+See official `react-native` [docs](https://facebook.github.io/react-native/docs/animated#spring)
+
+---
+
+### `minDistanceToCapture`
+
+Initiate animation after swipe this distance. It fix gesture collisions inside ScrollView
+
+|  Type  | Default |
+| :----: | :-----: |
+| number |    5    |
+
+---
+
+### `minDistanceForAction`
+
+Minimal part of swiper width (or height for vertical) must be swiped for changing index.
+Otherwise animation restore current slide. Default value 0.2 means that 20% must be swiped for change index
+
+|  Type  | Default |
+| :----: | :-----: |
+| number |   0.2   |
+
+---
+
+### `positionFixed`
+
+Swiper inner container position `fixed` instead `relative`. Fix mobile safari vertical bounce
+
+|  Type   | Default |
+| :-----: | :-----: |
+| boolean |  false  |
+
+---
+
+### `containerStyle`
+
+Outer (root) container style
+
+|      Type      | Default |
+| :------------: | :-----: |
+| object (style) |  none   |
+
+---
+
+### `innerContainerStyle`
+
+Inner container style
+
+|      Type      | Default |
+| :------------: | :-----: |
+| object (style) |  none   |
+
+---
+
+### `swipeAreaStyle`
+
+Swipe area style
+
+|      Type      | Default |
+| :------------: | :-----: |
+| object (style) |  none   |
+
+---
+
+### `slideWrapperStyle`
+
+Each slide wrapper style
+
+|      Type      | Default |
+| :------------: | :-----: |
+| object (style) |  none   |
+
+---
+
+### `controlsEnabled`
+
+Dots and control buttons visible and enabled
+
+|  Type   | Default |
+| :-----: | :-----: |
+| boolean |  true   |
+
+---
+
+### `Controls`
+
+Custom controls component
+
+|   Type    | Default  |
+| :-------: | :------: |
+| component | internal |
+
+---
+
+### `onAnimationStart`
+
+Any swiper animation start
+
+|   Type   | Default |
+| :------: | :-----: |
+| function |  none   |
+
+---
+
+### `onAnimationEnd`
+
+Any swiper animation end
+
+|   Type   | Default |
+| :------: | :-----: |
+| function |  none   |
+
+---
+
+### `onIndexChanged`
+
+Called when active index changed
+
+|   Type   | Default |
+| :------: | :-----: |
+| function |  none   |
+
+---
+
+## `controlsProps`
+
+|   Type   | Default |
+| :------: | :-----: |
+|  object  |  below  |
+
+---
+
+### `cellsStyle`
+
+Controls corners placeholders styles.
+Allowed keys is: `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` and `bottom-right`,
+allowed values is `object (style)`
+
+|   Type   | Default |
+| :------: | :-----: |
+|  object  |  none   |
+
+---
+
+### `cellsContent`
+
+Controls corners placeholders additional content
+Allowed keys is: `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` and `bottom-right`,
+allowed values is `string  OR  React element`
+
+---
+
+### `dotsPos`
+
+Dots position.
+Allowed values: `boolean` or `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom`, `bottom-right`
+
+|             Type            |                Default              |
+| :-------------------------: | :---------------------------------: |
+|  boolean **OR** enum above  | 'bottom' **OR** 'right' if vertical |
+
+---
+
+### `prevPos`
+
+Prev button position.
+Allowed values: `boolean` or `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom`, `bottom-right`
+
+|             Type            |                      Default                 |
+| :-------------------------: | :------------------------------------------: |
+|  boolean **OR** enum above  | 'bottom-left' **OR** 'top-right' if vertical |
+
+---
+
+### `nextPos`
+
+Next button position.
+Allowed values: `boolean` or `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom`, `bottom-right`
+
+|             Type            |     Default    |
+| :-------------------------: | :------------: |
+|  boolean **OR** enum above  | 'bottom-right' |
+
+---
+
+### `prevTitle`
+
+Prev button title
+
+|   Type   | Default |
+| :------: | :-----: |
+|  string  | 'Prev'  |
+
+---
+
+### `nextTitle`
+
+Next button title
+
+|   Type   | Default |
+| :------: | :-----: |
+|  string  | 'Prev'  |
+
+---
+
+### `dotsTouchable`
+
+Touches over dots will move swiper to relative slide
+
+|  Type   | Default |
+| :-----: | :-----: |
+| boolean |  false  |
+
+---
+
+### `dotsWrapperStyle`
+
+Dots wrapper View style
+
+|      Type      | Default |
+| :------------: | :-----: |
+| object (style) |  none   |
+
+---
+
+### `dotProps`
+
+Customizing dot with [Badge](/react-native-elements/docs/badge.html) props
+
+|                                      Type                                         | Default |
+| :-------------------------------------------------------------------------------: | :-----: |
+| {[...Badge props](/react-native-elements/docs/badge.html#props)} |  none   |
+
+---
+
+### `dotActiveStyle`
+
+Additional style to active dot
+
+|      Type      | Default |
+| :------------: | :-----: |
+| object (style) |  none   |
+
+---
+
+### `DotComponent`
+
+Custom dot component
+
+|   Type    |                              Default                             |
+| :-------: | :--------------------------------------------------------------: |
+| component | [Badge](/react-native-elements/docs/badge.html) |
+
+---
+
+### `prevProps`
+
+Customize prev button with [Button](/react-native-elements/docs/button.html) props
+
+|                                        Type                                         | Default |
+| :---------------------------------------------------------------------------------: | :-----: |
+| {[...Button props](/react-native-elements/docs/button.html#props)} |  none   |
+
+---
+
+### `nextProps`
+
+Customize next button with [Button](/react-native-elements/docs/button.html) props
+
+|                                        Type                                         | Default |
+| :---------------------------------------------------------------------------------: | :-----: |
+| {[...Button props](/react-native-elements/docs/button.html#props)} |  none   |
+
+---
+
+### `PrevComponent`
+
+Custom prev button component
+
+|   Type    |                               Default                              |
+| :-------: | :----------------------------------------------------------------: |
+| component | [Button](/react-native-elements/docs/button.html) |
+
+---
+
+### `NextComponent`
+
+Custom next button component
+
+|   Type    |                               Default                              |
+| :-------: | :----------------------------------------------------------------: |
+| component | [Button](/react-native-elements/docs/button.html) |
+
+---
+
+### `firstPrevElement`
+
+Custom prev element on first slide (if not loop)
+
+|   Type    | Default  |
+| :-------: | :------: |
+| component |   none   |
+
+---
+
+### `lastNextElement`
+
+Custom next element on last slide (if not loop)
+
+|   Type    | Default  |
+| :-------: | :------: |
+| component |   none   |
