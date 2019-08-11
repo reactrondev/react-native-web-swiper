@@ -62,7 +62,7 @@ export default class Screen extends React.Component {
 
 ### With props
 
-```js
+```jsx
 <Swiper
   vertical {/* slide up / down instead left / right */}
   from={1} {/* initial slide is second */}
@@ -111,7 +111,7 @@ We created 9 controls placeholders to solve this problem:
 `top-left`, `top`, `top-right`, `left`, `center`, `right`, `bottom-left`, `bottom` and `bottom-right`.
 You can adjust controls position by placing into relevant placeholder:
 
-```js
+```jsx
 <Swiper
   ...
   controlsProps={{
@@ -158,7 +158,7 @@ You can adjust controls position by placing into relevant placeholder:
 Store a reference to the Swiper in your component by using the ref prop
 provided by React ([see docs](https://reactjs.org/docs/refs-and-the-dom.html)):
 
-```js
+```jsx
 const swiperRef = useRef(null);
 
 ...
@@ -171,7 +171,7 @@ const swiperRef = useRef(null);
 
 Then you can manually trigger swiper from anywhere:
 
-```js
+```jsx
 () => {
   swiperRef.goTo(1);
   swiperRef.goToPrev();
