@@ -63,8 +63,6 @@ export default class Screen extends React.Component {
 ### With props
 
 ```js
-import { Swiper } from 'react-native-elements'
-
 <Swiper
   vertical {/* slide up / down instead left / right */}
   from={1} {/* initial slide is second */}
