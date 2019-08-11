@@ -4,9 +4,7 @@ Simple swiper / slider. Works both on React-Native and React-Native-Web.
 
 ## Demo
 
-Native: https://snack.expo.io/@oxyii/react-native-web-swiper
-
-Web: https://oxyii.github.io/react-native-web-swiper
+Hybrid Snack: https://snack.expo.io/@oxyii/react-native-web-swiper
 
 ## Installation
 
