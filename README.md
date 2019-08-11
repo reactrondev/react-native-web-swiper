@@ -98,7 +98,7 @@ export default class Screen extends React.Component {
 | swipeAreaStyle       |              | `ViewPropTypes.style` | Swipe area style |
 | slideWrapperStyle    |              | `ViewPropTypes.style` | Each slide wrapper style |
 | controlsEnabled      | `true`       | `boolean`             | Dots and control buttons visible and enabled |
-| Controls             |              | `React.Component`     | Custom controls comp77onent |
+| Controls             |              | `React.Component`     | Custom controls component |
 | onAnimationStart     |              | `function`            | Any swiper animation start |
 | onAnimationEnd       |              | `function`            | Any swiper animation end |
 | onIndexChanged       |              | `function`            | Called when active index changed |
