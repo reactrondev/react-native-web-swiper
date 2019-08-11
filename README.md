@@ -173,9 +173,9 @@ Then you can manually trigger swiper from anywhere:
 
 ```jsx
 () => {
-  swiperRef.goTo(1);
-  swiperRef.goToPrev();
-  swiperRef.goToNext();
-  const index = swiperRef.getActiveIndex();
+  swiperRef.current.goTo(1);
+  swiperRef.current.goToPrev();
+  swiperRef.current.goToNext();
+  const index = swiperRef.current.getActiveIndex();
 };
 ```
