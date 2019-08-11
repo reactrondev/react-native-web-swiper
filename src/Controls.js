@@ -260,11 +260,14 @@ const styles = {
   cell: {
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
   },
   dotsWrapper: vertical => ({
     flexDirection: vertical ? 'column' : 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    minWidth: 1,
+    minHeight: 1,
   }),
   dotsItemContainer: {
     margin: 3,
