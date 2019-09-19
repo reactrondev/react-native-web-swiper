@@ -78,6 +78,55 @@ export default class Screen extends React.Component {
 </Swiper>
 ```
 
+### Dynamic content
+
+The Swiper will not be re-rendered if slides state or props have changed. Slides must control their condition.
+
+```jsx
+import React from 'react';
+import { Text, View } from 'react-native';
+
+export class SomeDynamicSlide extends React.Component {
+  state = {
+    someStateItem: 'someValue',
+  };
+
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text onPress={() => this.setState({ someStateItem: 'newValue' })}>
+            {this.state.someStateItem}
+        </Text>
+      </View>
+    );
+  }
+}
+
+...
+
+import React from 'react';
+import { Text, View } from 'react-native';
+import Swiper from 'react-native-web-swiper';
+import { SomeDynamicSlide } from 'someDynamicSlideFile';
+
+class SwiperWrapper extends React.Component {
+  render() {
+    return (
+      <Swiper>
+
+        <SomeDynamicSlide />
+
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>This is static content slide</Text>
+        </View>
+
+      </Swiper>
+    );
+  }
+}
+
+``` 
+
 ---
 
 ## Props
