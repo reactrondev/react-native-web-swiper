@@ -336,7 +336,7 @@ export interface SwiperProps {
 /**
  * Swiper component
  */
-export class Swiper extends React.Component<SwiperProps, any> {
+export default class Swiper extends React.Component<SwiperProps, any> {
     /**
      * Go to next slide
      */
