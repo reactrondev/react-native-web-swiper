@@ -71,6 +71,9 @@ export default class Screen extends React.Component {
   springConfig={{ speed: 11 }} {/* RN Animated.spring config */}
   minDistanceForAction={0.15} {/* Swipe less that 15% keep active slide */}
   positionFixed {/* Fix mobile safari vertical bounces */}
+  controlsProps={{
+    DotComponent: ({ isActive, onPress }) => <Text onPress={onPress}>Your Custom Dot</Text>
+  }}
 >
   <View style={{ flex: 1 }} /> {/* Slide 1 */}
   <View style={{ flex: 1 }} /> {/* Slide 2 */}
