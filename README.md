@@ -72,7 +72,7 @@ export default class Screen extends React.Component {
   minDistanceForAction={0.15} {/* Swipe less that 15% keep active slide */}
   positionFixed {/* Fix mobile safari vertical bounces */}
   controlsProps={{
-    DotComponent: ({ isActive, onPress }) => <Text onPress={onPress}>Your Custom Dot</Text>
+    DotComponent: ({ index, isActive, onPress }) => <Text onPress={onPress}>Your Custom Dot {index+1}</Text>
   }}
 >
   <View style={{ flex: 1 }} /> {/* Slide 1 */}
