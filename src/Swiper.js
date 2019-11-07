@@ -100,7 +100,7 @@ class Swiper extends React.Component {
       onMoveShouldSetPanResponderCapture: (e, gestureState) => {
         const { gesturesEnabled, vertical, minDistanceToCapture } = this.props;
 
-        if (!gesturesEnabled) {
+        if (!gesturesEnabled()) {
           return false;
         }
 
@@ -294,7 +294,7 @@ Swiper.propTypes = {
   from: PropTypes.number,
   loop: PropTypes.bool,
   timeout: PropTypes.number,
-  gesturesEnabled: PropTypes.bool,
+  gesturesEnabled: PropTypes.func,
   springConfig: PropTypes.object,
   minDistanceToCapture: PropTypes.number, // inside ScrollView
   minDistanceForAction: PropTypes.number,
@@ -321,7 +321,7 @@ Swiper.defaultProps = {
   from: 0,
   loop: false,
   timeout: 0,
-  gesturesEnabled: true,
+  gesturesEnabled: () => true,
   minDistanceToCapture: 5,
   minDistanceForAction: 0.2,
   positionFixed: false,
