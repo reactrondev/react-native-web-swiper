@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, ViewPropTypes } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { nodeType } from './nodeType';
 import { renderNode } from './renderNode';
@@ -200,7 +200,7 @@ export default class DefaultControls extends React.Component {
 DefaultControls.propTypes = {
   cellsStyle: PropTypes.shape(
     cellPositions.reduce(
-      (obj, item) => ({ ...obj, [item]: ViewPropTypes.style }),
+      (obj, item) => ({ ...obj, [item]: PropTypes.style }),
       {}
     )
   ),
@@ -215,14 +215,22 @@ DefaultControls.propTypes = {
   nextTitle: PropTypes.string,
 
   dotsTouchable: PropTypes.bool,
-  dotsWrapperStyle: ViewPropTypes.style,
+  dotsWrapperStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
 
   dotProps: PropTypes.shape(Badge.propTypes),
-  dotActiveStyle: ViewPropTypes.style,
+  dotActiveStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
   DotComponent: PropTypes.func,
 
-  prevTitleStyle: Text.propTypes.style,
-  nextTitleStyle: Text.propTypes.style,
+  prevTitleStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
+  nextTitleStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
   PrevComponent: PropTypes.func,
   NextComponent: PropTypes.func,
   firstPrevElement: nodeType,

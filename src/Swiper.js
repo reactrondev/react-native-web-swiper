@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Animated, PanResponder, StyleSheet, View, ViewPropTypes } from 'react-native';
+import { Animated, PanResponder, StyleSheet, View } from 'react-native';
 
 import DefaultControls from './Controls';
 
@@ -123,7 +123,7 @@ class Swiper extends React.Component {
         this.props.vertical
           ? { dy: this.state.pan.y }
           : { dx: this.state.pan.x },
-      ]),
+      ], { useNativeDriver: false }),
       onPanResponderRelease: (e, gesture) => {
         const { vertical, minDistanceForAction } = this.props;
         const { width, height } = this.state;
@@ -304,10 +304,18 @@ Swiper.propTypes = {
   onIndexChanged: PropTypes.func,
 
   positionFixed: PropTypes.bool, // Fix safari vertical bounces
-  containerStyle: ViewPropTypes.style,
-  innerContainerStyle: ViewPropTypes.style,
-  swipeAreaStyle: ViewPropTypes.style,
-  slideWrapperStyle: ViewPropTypes.style,
+  containerStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
+  innerContainerStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
+  swipeAreaStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
+  slideWrapperStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
 
   controlsEnabled: PropTypes.bool,
   controlsProps: PropTypes.shape(DefaultControls.propTypes),

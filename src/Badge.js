@@ -39,9 +39,15 @@ const Badge = props => {
 };
 
 Badge.propTypes = {
-  containerStyle: ViewPropTypes.style,
-  badgeStyle: ViewPropTypes.style,
-  textStyle: Text.propTypes.style,
+  containerStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
+  badgeStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
+  textStyle: PropTypes.shape({
+    style: PropTypes.any,
+  }),
   value: PropTypes.node,
   onPress: PropTypes.func,
   Component: PropTypes.func,
