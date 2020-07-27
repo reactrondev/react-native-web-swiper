@@ -1,7 +1,5 @@
 # react-native-web-swiper
 
-**!!! [Looking for new owner for this package](https://github.com/oxyii/react-native-web-swiper/issues/42) !!!**
-
 Simple swiper / slider. Works both on React-Native and React-Native-Web.
 
 ## Demo
