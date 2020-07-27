@@ -237,11 +237,11 @@ export interface SwiperProps {
     timeout?: number;
 
     /**
-     * Allow to swipe
+     * Should the swiper's swiping gesture be enabled?
      *
      * @default true
      */
-    gesturesEnabled?: boolean;
+    gesturesEnabled?: () => boolean;
 
     /**
      * Tune spring animation on autoplay, touch release or slides changes via buttons
