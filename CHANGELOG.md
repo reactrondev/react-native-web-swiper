@@ -5,7 +5,11 @@ react-native-web-swiper
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 2.1.4 — 2020-07-27
+## 2.1.5 — 2020-07-27
+
+- This is a patch for 2.1.4 due to the failure of generating builds
+
+## 2.1.4 — 2020-07-27 - DO NOT USE, use 2.1.5 and above instead
 
 ### Fixed
 
