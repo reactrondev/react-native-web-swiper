@@ -1,7 +1,7 @@
 {
-  "name": "react-native-web-swiper",
-  "version": "2.1.7",
-  "homepage": "https://github.com/reactrondev/react-native-web-swiper#readme",
+  "name": "@softmedialab/react-native-web-swiper",
+  "version": "0.0.1",
+  "homepage": "https://github.com/SoftMediaLab/react-native-web-swiper#readme",
   "types": "./index.d.ts",
   "main": "build/index.js",
   "license": "MIT",
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reactrondev/react-native-web-swiper.git"
+    "url": "git+https://github.com/SoftMediaLab/react-native-web-swiper.git"
   },
   "scripts": {
     "build": "rm -rf build && babel src --out-dir build",

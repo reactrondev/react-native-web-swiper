@@ -230,6 +230,13 @@ export interface SwiperProps {
     loop?: boolean;
 
     /**
+     * Loop animation variant
+     *
+     * @default 'spring'
+     */
+    loopAnimation?: 'spring' | 'extension';
+
+    /**
      * Autoplay slider timeout in secs. Negative value will play reverse
      *
      * @default 0 (autoplay disabled)
@@ -304,6 +311,11 @@ export interface SwiperProps {
      * Controls Properties
      */
     controlsProps?: SwiperControlsProps;
+
+    /**
+     * Number of slides per view (slides visible at the same time on slider's container).
+     */
+    slidesPerView?: number;
 
     /**
      * Custom controls component

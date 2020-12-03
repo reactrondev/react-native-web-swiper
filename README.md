@@ -139,6 +139,7 @@ class SwiperWrapper extends React.Component {
 | vertical             | `false`      | `boolean`             | Swiper vertical layout |
 | from                 | `0`          | `number`              | Initial slide index |
 | loop                 | `false`      | `boolean`             | Set to `true` to enable continuous loop mode |
+| loopAnimation        | `spring`     | `spring` \| `extension` | Loop animation variant |
 | timeout              | `0`          | `number`              | Delay between auto play transitions (in second). Set negative value for reverse autoplay :satisfied:. Autoplay disabled by default |
 | gesturesEnabled      | `true`       | `boolean`             | Function that returns boolean value. Set to `false` to disable swiping mechanism. Allow to use Prev / Next buttons only |
 | springConfig         |              | [`Animated.spring`](https://facebook.github.io/react-native/docs/animated#spring) | Tune spring animation on autoplay, touch release or slides changes via buttons |
@@ -149,6 +150,7 @@ class SwiperWrapper extends React.Component {
 | innerContainerStyle  |              | `ViewPropTypes.style` | Inner container style |
 | swipeAreaStyle       |              | `ViewPropTypes.style` | Swipe area style |
 | slideWrapperStyle    |              | `ViewPropTypes.style` | Each slide wrapper style |
+| slidesPerView        | `1`          | `number`              | Number of slides per view (slides visible at the same time on slider's container). |
 | controlsEnabled      | `true`       | `boolean`             | Dots and control buttons visible and enabled |
 | Controls             |              | `React.Component`     | Custom controls component |
 | onAnimationStart     |              | `function`            | Any swiper animation start |
