@@ -1,6 +1,6 @@
 {
   "name": "@softmedialab/react-native-web-swiper",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "homepage": "https://github.com/SoftMediaLab/react-native-web-swiper#readme",
   "types": "./index.d.ts",
   "main": "build/index.js",

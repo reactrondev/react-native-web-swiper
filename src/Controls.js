@@ -187,11 +187,12 @@ export default class DefaultControls extends React.Component {
 
   render() {
     const Row = this._renderRow;
+    const { topRow, centerRow, bottomRow } = this.props;
     return (
       <React.Fragment>
-        <Row rowAlign="top" contentAlign="flex-start" />
-        <Row contentAlign="center" />
-        <Row rowAlign="bottom" contentAlign="flex-end" />
+        {topRow && <Row rowAlign="top" contentAlign="flex-start" />}
+        {centerRow && <Row contentAlign="center" />}
+        {bottomRow && <Row rowAlign="bottom" contentAlign="flex-end" />}
       </React.Fragment>
     );
   }
@@ -245,11 +246,18 @@ DefaultControls.propTypes = {
   goToPrev: PropTypes.func,
   goToNext: PropTypes.func,
   goTo: PropTypes.func,
+
+  topRow: PropTypes.bool,
+  centerRow: PropTypes.bool,
+  bottomRow: PropTypes.bool,
 };
 
 DefaultControls.defaultProps = {
   prevTitle: 'Prev',
   nextTitle: 'Next',
+  topRow: true,
+  centerRow: true,
+  bottomRow: true,
 };
 
 const styles = {

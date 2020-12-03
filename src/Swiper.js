@@ -244,7 +244,8 @@ class Swiper extends React.Component {
   }
 
   render() {
-    const { pan, x, y, width, height } = this.state;
+    const { pan, x, y, width } = this.state;
+    const height = this.props.autoHeight ? undefined : this.state.height;
 
     const {
       theme,
@@ -322,6 +323,7 @@ Swiper.propTypes = {
   springConfig: PropTypes.object,
   minDistanceToCapture: PropTypes.number, // inside ScrollView
   minDistanceForAction: PropTypes.number,
+  autoHeight: PropTypes.bool,
 
   onAnimationStart: PropTypes.func,
   onAnimationEnd: PropTypes.func,

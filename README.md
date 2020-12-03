@@ -157,6 +157,7 @@ class SwiperWrapper extends React.Component {
 | onAnimationEnd       |              | `function`            | Any swiper animation end |
 | onIndexChanged       |              | `function`            | Called when active index changed |
 | controlsProps        |              | `object`              | see below |
+| autoHeight           | `false`      | `boolean`             | Calculate height from children elements |
 
 ### Controls Props
 
@@ -206,6 +207,9 @@ You can adjust controls position by placing into relevant placeholder:
 | dotProps             |              | `object`                 | `react-native-elements` [Badge props](https://react-native-training.github.io/react-native-elements/docs/badge.html#props) |
 | dotActiveStyle       |              | `object`                 | Additional style to active dot. Will be added to dot [badgeStyle](https://react-native-training.github.io/react-native-elements/docs/badge.html#badgestyle) |
 | DotComponent         |              | `React.Component`        | Custom dot component |
+| topRow               | `true`       | `boolean`                | Render top row       |
+| centerRow            | `true`       | `boolean`                | Render center row    |
+| bottomRow            | `true`       | `boolean`                | Render bottom row    |
 
 ## Interaction methods
 

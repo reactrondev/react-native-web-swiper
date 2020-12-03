@@ -190,6 +190,21 @@ interface SwiperControlsProps {
      * Custom next element on last slide (if not loop)
      */
     lastNextElement?: React.ReactElement<{}>;
+
+    /** 
+     * Render top row 
+     */
+    topRow: boolean;
+
+    /** 
+     * Render center row 
+     */
+    centerRow: boolean;
+
+    /** 
+     * Render bottom row 
+     */
+    bottomRow: boolean;
 }
 
 // TODO: extends Animated.SpringAnimationConfig but without toValue
@@ -316,6 +331,11 @@ export interface SwiperProps {
      * Number of slides per view (slides visible at the same time on slider's container).
      */
     slidesPerView?: number;
+
+    /**
+     * Calculate height from children elements.
+     */
+    autoHeight?: boolean;
 
     /**
      * Custom controls component
