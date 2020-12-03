@@ -156,11 +156,27 @@ class Swiper extends React.Component {
     }).start(() => onAnimationEnd && onAnimationEnd(activeIndex));
   }
 
+  _getValueX() {
+    const { width, activeIndex } = this.state;
+
+    if (this.props.vertical) {
+      return 0;
+    }
+    return width * (activeIndex + 1) * -1 / this.props.slidesPerView;
+  }
+
+  _getValueY() {
+    const { height, activeIndex } = this.state;
+
+    if (!this.props.vertical) {
+      return 0;
+    }
+    return height * (activeIndex + 1) * -1;
+  }
+
   _fixState() {
-    const { vertical } = this.props;
-    const { width, height, activeIndex } = this.state;
-    this._animatedValueX = vertical ? 0 : width * activeIndex * -1;
-    this._animatedValueY = vertical ? height * activeIndex * -1 : 0;
+    this._animatedValueX = this._getValueX();
+    this._animatedValueY =  this._getValueY();
     this.state.pan.setOffset({
       x: this._animatedValueX,
       y: this._animatedValueY,
@@ -180,19 +196,15 @@ class Swiper extends React.Component {
     const { width, height, activeIndex } = this.state;
 
     let toValue = { x: 0, y: 0 };
-    let skipChanges = !delta;
     let calcDelta = delta;
 
+    if (!loop) {
+      return this._spring(toValue);
+    }
     if (activeIndex <= 0 && delta < 0) {
-      skipChanges = !loop;
       calcDelta = this.count + delta;
     } else if (activeIndex + 1 >= this.count && delta > 0) {
-      skipChanges = !loop;
       calcDelta = -1 * activeIndex + delta - 1;
-    }
-
-    if (skipChanges) {
-      return this._spring(toValue);
     }
 
     this.stopAutoplay();
@@ -200,10 +212,13 @@ class Swiper extends React.Component {
     let index = activeIndex + calcDelta;
     this.setState({ activeIndex: index });
 
+    if (this.props.loopAnimation === 'extension') {
+      calcDelta = delta;
+    }
     if (vertical) {
       toValue.y = height * -1 * calcDelta;
     } else {
-      toValue.x = width * -1 * calcDelta;
+      toValue.x = (width * -1 * calcDelta) / this.props.slidesPerView;
     }
     this._spring(toValue);
 
@@ -217,6 +232,15 @@ class Swiper extends React.Component {
     },
   }) {
     this.setState({ x, y, width, height }, () => this._fixState());
+  }
+
+  _getChildren() {
+    const children = this.children
+      .slice(-1)
+      .concat(this.children)
+      .concat(this.children.slice(0, this.props.slidesPerView));
+
+    return children;
   }
 
   render() {
@@ -257,11 +281,11 @@ class Swiper extends React.Component {
             ])}
             {...this._panResponder.panHandlers}
           >
-            {this.children.map((el, i) => (
+            {this._getChildren().map((el, i) => (
               <View
                 key={i}
                 style={StyleSheet.flatten([
-                  { width, height },
+                  { width: width / this.props.slidesPerView, height },
                   slideWrapperStyle,
                 ])}
               >
@@ -328,12 +352,14 @@ Swiper.defaultProps = {
   vertical: false,
   from: 0,
   loop: false,
+  loopAnimation: 'spring',
   timeout: 0,
   gesturesEnabled: () => true,
   minDistanceToCapture: 5,
   minDistanceForAction: 0.2,
   positionFixed: false,
   controlsEnabled: true,
+  slidesPerView: 1,
 };
 
 const styles = {
