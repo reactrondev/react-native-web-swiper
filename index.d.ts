@@ -194,17 +194,17 @@ interface SwiperControlsProps {
     /** 
      * Render top row 
      */
-    topRow: boolean;
+    topRow?: boolean;
 
     /** 
      * Render center row 
      */
-    centerRow: boolean;
+    centerRow?: boolean;
 
     /** 
      * Render bottom row 
      */
-    bottomRow: boolean;
+    bottomRow?: boolean;
 }
 
 // TODO: extends Animated.SpringAnimationConfig but without toValue
@@ -223,6 +223,13 @@ interface SwiperSpringAnimationConfig {
 }
 
 export interface SwiperProps {
+    /**
+     * Use alternative PAN area
+     *
+     * @default false
+     */
+    alternatePan?: boolean;
+
     /**
      * Swiper vertical layout
      *

@@ -136,6 +136,7 @@ class SwiperWrapper extends React.Component {
 
 |         Prop         |    Default   |          Type         | Description |
 | :------------------- |:------------:| :--------------------:| :-----------|
+| alternatePan         | `false`      | `boolean`             | Alternate PAN area |
 | vertical             | `false`      | `boolean`             | Swiper vertical layout |
 | from                 | `0`          | `number`              | Initial slide index |
 | loop                 | `false`      | `boolean`             | Set to `true` to enable continuous loop mode |

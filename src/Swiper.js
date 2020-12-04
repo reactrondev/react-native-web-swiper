@@ -248,6 +248,7 @@ class Swiper extends React.Component {
     const height = this.props.autoHeight ? undefined : this.state.height;
 
     const {
+      alternatePan,
       theme,
       loop,
       vertical,
@@ -271,6 +272,7 @@ class Swiper extends React.Component {
             styles.container(positionFixed, x, y, width, height),
             innerContainerStyle,
           ])}
+          {...(alternatePan && this._panResponder.panHandlers)}
         >
           <Animated.View
             style={StyleSheet.flatten([
@@ -280,7 +282,7 @@ class Swiper extends React.Component {
                 transform: [{ translateX: pan.x }, { translateY: pan.y }],
               },
             ])}
-            {...this._panResponder.panHandlers}
+            {...(alternatePan || this._panResponder.panHandlers)}
           >
             {this._getChildren().map((el, i) => (
               <View
@@ -324,6 +326,7 @@ Swiper.propTypes = {
   minDistanceToCapture: PropTypes.number, // inside ScrollView
   minDistanceForAction: PropTypes.number,
   autoHeight: PropTypes.bool,
+  alternatePan: PropTypes.bool,
 
   onAnimationStart: PropTypes.func,
   onAnimationEnd: PropTypes.func,
@@ -362,6 +365,7 @@ Swiper.defaultProps = {
   positionFixed: false,
   controlsEnabled: true,
   slidesPerView: 1,
+  alternatePan: false,
 };
 
 const styles = {
