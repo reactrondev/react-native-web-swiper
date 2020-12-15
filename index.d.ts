@@ -273,6 +273,13 @@ export interface SwiperProps {
     gesturesEnabled?: () => boolean;
 
     /**
+     * min distance to capture in px
+     *
+     * @default 0
+     */
+    minDistanceToCapture?: number;
+
+    /**
      * Tune spring animation on autoplay, touch release or slides changes via buttons
      */
     springConfig?: SwiperSpringAnimationConfig;

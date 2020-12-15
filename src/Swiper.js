@@ -74,6 +74,7 @@ class Swiper extends React.Component {
       activeIndex: props.from,
       pan: new Animated.ValueXY(),
     };
+    this.currentGestureAllowed = true;
 
     this._animatedValueX = 0;
     this._animatedValueY = 0;
@@ -99,6 +100,9 @@ class Swiper extends React.Component {
       onMoveShouldSetResponderCapture: () => true,
       onMoveShouldSetPanResponderCapture: (e, gestureState) => {
         const { gesturesEnabled, vertical, minDistanceToCapture } = this.props;
+        const { dx: dxRaw, dy: dyRaw } = gestureState;
+        const dx = Math.abs(dxRaw);
+        const dy = Math.abs(dyRaw);
 
         if (!gesturesEnabled()) {
           return false;
@@ -106,10 +110,13 @@ class Swiper extends React.Component {
 
         this.props.onAnimationStart &&
           this.props.onAnimationStart(this.getActiveIndex());
+        
+        const thresholdOvercome = (vertical ? dy : dx) > (minDistanceToCapture || 0);
+        const allow = thresholdOvercome && (vertical ? dy > dx : dx > dy);
 
-        const allow =
-          Math.abs(vertical ? gestureState.dy : gestureState.dx) >
-          minDistanceToCapture;
+        if (this.currentGestureAllowed && thresholdOvercome) {
+          this.currentGestureAllowed = allow;
+        }
 
         if (allow) {
           this.stopAutoplay();
@@ -118,17 +125,25 @@ class Swiper extends React.Component {
         return allow;
       },
       onPanResponderGrant: () => this._fixState(),
-      onPanResponderMove: Animated.event([
-        null,
-        this.props.vertical
-          ? { dy: this.state.pan.y }
-          : { dx: this.state.pan.x },
-      ], { useNativeDriver: false }),
+      onPanResponderMove: (...args) => {
+        if (this.currentGestureAllowed) {
+          Animated.event([
+            null,
+            this.props.vertical
+              ? { dy: this.state.pan.y }
+              : { dx: this.state.pan.x },
+          ], { useNativeDriver: false })(...args);
+        }
+      },
+      onPanResponderEnd: () => {
+        this.currentGestureAllowed = true;
+      },
       onPanResponderRelease: (e, gesture) => {
         const { vertical, minDistanceForAction } = this.props;
         const { width, height } = this.state;
 
         this.startAutoplay();
+        this.currentGestureAllowed = true;
 
         const correction = vertical
           ? gesture.moveY - gesture.y0
