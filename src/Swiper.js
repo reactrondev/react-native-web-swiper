@@ -140,7 +140,7 @@ class Swiper extends React.Component {
         ) {
           this._spring({ x: 0, y: 0 });
         } else {
-          this._changeIndex(correction > 0 ? (I18nManager.isRTL ? 1 : -1) : (I18nManager.isRTL ? -1 : 1));
+          this._changeIndex(correction > 0 ? (!vertical && I18nManager.isRTL ? 1 : -1) : (!vertical && I18nManager.isRTL ? -1 : 1));
         }
       },
     };
@@ -160,7 +160,7 @@ class Swiper extends React.Component {
     const { vertical } = this.props;
     const { width, height, activeIndex } = this.state;
     this._animatedValueX = vertical ? 0 : width * activeIndex * (I18nManager.isRTL ? 1 : -1);
-    this._animatedValueY = vertical ? height * activeIndex * (I18nManager.isRTL ? 1 : -1) : 0;
+    this._animatedValueY = vertical ? height * activeIndex * -1 : 0;
     this.state.pan.setOffset({
       x: this._animatedValueX,
       y: this._animatedValueY,
@@ -201,7 +201,7 @@ class Swiper extends React.Component {
     this.setState({ activeIndex: index });
 
     if (vertical) {
-      toValue.y = height * (I18nManager.isRTL ? 1 : -1) * calcDelta;
+      toValue.y = height * -1 * calcDelta;
     } else {
       toValue.x = width * (I18nManager.isRTL ? 1 : -1) * calcDelta;
     }
