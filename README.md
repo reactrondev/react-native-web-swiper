@@ -83,7 +83,7 @@ export default class Screen extends React.Component {
 
 ### Dynamic content
 
-The Swiper will not be re-rendered if slides state or props have changed. Slides must control their condition.
+The swiper content re-render itself by keep track of `activeIndex` and `index`.
 
 ```jsx
 import React from 'react';
