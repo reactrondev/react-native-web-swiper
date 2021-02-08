@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import { Animated, I18nManager, PanResponder, StyleSheet, View } from 'react-native';
 
@@ -265,7 +265,7 @@ class Swiper extends React.Component {
                   slideWrapperStyle,
                 ])}
               >
-                {el}
+                {cloneElement(el, { key: i - this.getActiveIndex() ? i : -1, activeIndex: this.getActiveIndex(), index: i })}
               </View>
             ))}
           </Animated.View>
