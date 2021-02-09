@@ -83,52 +83,35 @@ export default class Screen extends React.Component {
 
 ### Dynamic content
 
-The swiper content re-render itself by keep track of `activeIndex` and `index`.
+The slide automatically gets `props.activeIndex` and `props.index`.
 
 ```jsx
 import React from 'react';
 import { Text, View } from 'react-native';
-
-export class SomeDynamicSlide extends React.Component {
-  state = {
-    someStateItem: 'someValue',
-  };
-
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text onPress={() => this.setState({ someStateItem: 'newValue' })}>
-            {this.state.someStateItem}
-        </Text>
-      </View>
-    );
-  }
-}
-
-...
-
-import React from 'react';
-import { Text, View } from 'react-native';
 import Swiper from 'react-native-web-swiper';
-import { SomeDynamicSlide } from 'someDynamicSlideFile';
 
-class SwiperWrapper extends React.Component {
-  render() {
-    return (
-      <Swiper>
-
-        <SomeDynamicSlide />
-
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>This is static content slide</Text>
-        </View>
-
-      </Swiper>
-    );
-  }
+type Props = {
+  index?: number,
+  activeIndex?: number,
 }
+export const SomeSlide = (props: Props) => (
+  <View>
+    <Text>{props.activeIndex}/{props.index}</Text>
+  </View>
+)
 
-``` 
+export default () => (
+  <Swiper>
+    <SomeSlide />
+    <SomeSlide />
+  </Swiper>
+)
+```
+
+This is possible because `Swiper` used `cloneElement` and inject internally the `activeIndex` and `index` props to each slide.
+
+> `keys` are automatically set for each child of `Swiper` (when injecting props), if `activeIndex - index` is `0`, it will set the key to `-1`. 
+> **This will cause the new active slide to rerender**
 
 ---
 
