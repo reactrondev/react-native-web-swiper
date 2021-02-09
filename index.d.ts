@@ -159,7 +159,7 @@ interface SwiperControlsProps {
     /**
      * Custom dot component
      */
-    DotComponent?: React.ComponentType;
+    DotComponent?: React.ComponentType<T>;
 
     /**
      * Customize prev button title
