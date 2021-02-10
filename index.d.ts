@@ -22,7 +22,7 @@ export type SwiperControlsCorners =
     | 'bottom-right';
 
 // TODO: optimize
-interface SwiperControlsCellsStyle {
+export interface SwiperControlsCellsStyle {
     'top-left'?: StyleProp<ViewStyle>;
     top?: StyleProp<ViewStyle>;
     'top-right'?: StyleProp<ViewStyle>;
@@ -73,7 +73,7 @@ export interface BadgeProps {
      *
      * @default View (if onPress then TouchableOpacity)
      */
-    Component?: React.ComponentClass;
+    Component?: React.ComponentType<T>;
 
     /**
      * Determines color of the indicator
@@ -88,7 +88,7 @@ export interface BadgeProps {
     onPress?(): void;
 }
 
-interface SwiperControlsProps {
+export interface SwiperControlsProps {
     /**
      * Controls corners placeholders styles
      */
@@ -174,12 +174,12 @@ interface SwiperControlsProps {
     /**
      * Custom prev button component
      */
-    PrevComponent?: React.ComponentClass;
+    PrevComponent?: React.ComponentType<T>;
 
     /**
      * Custom next button component
      */
-    NextComponent?: React.ComponentClass;
+    NextComponent?: React.ComponentType<T>;
 
     /**
      * Custom prev element on first slide (if not loop)
@@ -193,7 +193,7 @@ interface SwiperControlsProps {
 }
 
 // TODO: extends Animated.SpringAnimationConfig but without toValue
-interface SwiperSpringAnimationConfig {
+export interface SwiperSpringAnimationConfig {
     overshootClamping?: boolean;
     restDisplacementThreshold?: number;
     restSpeedThreshold?: number;
@@ -308,7 +308,7 @@ export interface SwiperProps {
     /**
      * Custom controls component
      */
-    Controls?: React.ComponentClass;
+    Controls?: React.ComponentType<T>;
 
     /**
      * Any swiper animation start
