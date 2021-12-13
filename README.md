@@ -108,10 +108,7 @@ export default () => (
 )
 ```
 
-This is possible because `Swiper` used `cloneElement` and inject internally the `activeIndex` and `index` props to each slide.
-
-> `keys` are automatically set for each child of `Swiper` (when injecting props), if `activeIndex - index` is `0`, it will set the key to `-1`. 
-> **This will cause the new active slide to rerender**
+This is possible because `Swiper` used `cloneElement` and inject internally the `activeIndex` and `index` props to each slide. This also means that all slides will re-render on swipe, since the `activeIndex` prop value changes on swipe.
 
 ---
 
