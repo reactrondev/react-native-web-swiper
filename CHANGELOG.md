@@ -5,6 +5,10 @@ react-native-web-swiper
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.2.2 - 2021-12-13
+
+- Children re-rendering behaviour is updated per #74 by @jarredt
+
 ## 2.1.6 — 2020-07-27
 
 - This is a patch for 2.1.4 due to the failure of generating builds
