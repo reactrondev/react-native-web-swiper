@@ -83,7 +83,7 @@ export default class Screen extends React.Component {
 
 ### Dynamic content
 
-The slide automatically gets `props.activeIndex` and `props.index`.
+The slide automatically gets `props.isActive`, `props.activeIndex` and `props.index`.
 
 ```jsx
 import React from 'react';
@@ -96,7 +96,7 @@ type Props = {
 }
 export const SomeSlide = (props: Props) => (
   <View>
-    <Text>{props.activeIndex}/{props.index}</Text>
+    <Text>{props.activeIndex}/{props.index}{props.isActive ? ' (active)' : ''}</Text>
   </View>
 )
 

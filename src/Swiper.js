@@ -265,7 +265,7 @@ class Swiper extends React.Component {
                   slideWrapperStyle,
                 ])}
               >
-                {cloneElement(el, { activeIndex: this.getActiveIndex(), index: i })}
+                {cloneElement(el, { activeIndex: this.getActiveIndex(), index: i, isActive: i === this.getActiveIndex() })}
               </View>
             ))}
           </Animated.View>
