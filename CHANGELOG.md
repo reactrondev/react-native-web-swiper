@@ -5,6 +5,12 @@ react-native-web-swiper
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.2.3 - 2022-01-25
+
+- Add `isActive` prop. @kopax
+- Add `activeIndex` prop to DotComponent. @kopax
+- Change DotComponent's generic props. @kopax
+
 ## 2.2.2 - 2021-12-13
 
 - Children re-rendering behaviour is updated per #74 by @jarredt
