@@ -89,6 +89,7 @@ export default class DefaultControls extends React.Component {
           <DotComponent
             key={index}
             index={index}
+            activeIndex={activeIndex}
             isActive={activeIndex === index}
             onPress={!dotsTouchable ? undefined : () => goTo(index)}
           />
