@@ -5,6 +5,9 @@ react-native-web-swiper
 The format is based on [Keep a Changelog](http://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.2.4 - 2022-10-02
+
+- Updated `children` prop type. Support for React 18 @eungwang1
 ## 2.2.3 - 2022-01-25
 
 - Add `isActive` prop. @kopax
