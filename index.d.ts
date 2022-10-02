@@ -330,6 +330,11 @@ export interface SwiperProps {
      * @param index
      */
     onIndexChanged?(index: number): void;
+    
+    /**
+     *  Children props for functional components
+    */
+    children?: React.ReactNode;
 }
 
 /**
