@@ -7,8 +7,7 @@ import DefaultControls from './Controls';
 const useNativeDriver = false; // because of RN #13377
 
 class Swiper extends React.Component {
-  children = (() => React.Children.toArray(this.props.children))();
-  count = (() => this.children.length)();
+  count = (() => React.Children.toArray(this.props.children).length)();
 
   startAutoplay() {
     const { timeout } = this.props;
@@ -234,6 +233,7 @@ class Swiper extends React.Component {
       controlsEnabled,
       controlsProps,
       Controls = DefaultControls,
+      children,
     } = this.props;
 
     return (
@@ -257,7 +257,7 @@ class Swiper extends React.Component {
             ])}
             {...this._panResponder.panHandlers}
           >
-            {this.children.map((el, i) => (
+            {children.map((el, i) => (
               <View
                 key={i}
                 style={StyleSheet.flatten([
